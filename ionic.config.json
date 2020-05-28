@@ -1,0 +1,7 @@
+{
+  "name": "andersonlaverde.com",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
