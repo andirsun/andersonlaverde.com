@@ -1,2 +1,4 @@
-# andersonlaverde.com
-Personal Web page with blog, podcast and more.
+# Personal Page 
+- Blog
+- CV
+- Innovation experiences
