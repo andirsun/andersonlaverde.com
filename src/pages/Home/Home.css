@@ -1,0 +1,5 @@
+/* Custom Gradient Theme*/
+.gradient {
+  background: rgb(33,95,120);
+  background: linear-gradient(135deg, rgba(33,95,120,1) 0%, rgba(28,103,124,1) 25%, rgba(17,119,134,1) 50%, rgba(7,142,146,1) 75%, rgba(4,156,157,1) 100%);
+}

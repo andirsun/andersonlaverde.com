@@ -1,0 +1,54 @@
+{
+  "navbar": {
+    "spanish": "Español",
+    "english": "Ingles",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "title": "Hacemos tus problemas de TI, ",
+    "titleColored": "Nuestros problemas.",
+    "text": "Con nuestro modelo de Outsourcing (tercerizacion) de TI por equipos de LATAM. Enfocate en tu negocio mientras nosotros nos encargamos de tu Tecnología",
+    "buttons": {
+      "contact": "Contacto",
+      "aboutUs": "Acerca Nuestro"
+    }
+  },
+  "partners": {
+    "title": "Nuestos Desarrolladores y partners estan construyendo software para",
+    "subTitle": "compañias TOP en Estados Unidos y LATAM"
+  },
+  "aboutUs": {
+    "title": "Quienes Somos",
+    "text": "Somos una consultora de desarrollo de software, que construye y despliega los proyectos más complejos y desafiantes para sus clientes."
+  },
+  "servicesCards": {
+    "title": "Servicios",
+    "firstCard": {
+      "title": "Aumento de Personal",
+      "text": "Nuestros ingenieros expertos trabajan junto a tu equipo interno de tecnologia. Ellos se unen a su equipo actual de manera remota hasta la finalización del proyecto."
+    },
+    "secondCard": {
+      "title": "Equipos Dedicados",
+      "text": "Destinamos un equipo de desarrollo y un lider tecnologico que supervisa directamente todo el desarrollo del proyecto. Esta opción te da una estructura de gestión y supervisión práctica del flujo de tus proyectos o stack tecnológico."
+    },
+    "thirthCard": {
+      "title": "Modelo basado en proyectos",
+      "text": "Tu supervisas todo el proceso de desarrollo del proyecto: desde el establecimiento de las especificaciones hasta la asignación del flujo de trabajo, la fijación de los plazos y las pruebas de calidad."
+    }
+  },
+  "contact": {
+    "title": "Sigamos en Contacto!",
+    "text": "Potencia tu negocio con equipos expertos en desarrollo de software.",
+    "form": {
+      "name": "Tu nombre",
+      "email": "Tu correo",
+      "company": "Tu empresa (Opcionál)",
+      "message": "Dejanos tu mensaje",
+      "button": "Enviar",
+      "confirmation": "Genial!. Te contactaremos tan pronto nos sea posible"
+    }
+  },
+  "footer": {
+
+  }
+}
