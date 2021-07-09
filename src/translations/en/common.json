@@ -1,0 +1,54 @@
+{
+  "navbar": {
+    "spanish": "Spanish",
+    "english": "English",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Make your IT problems, ",
+    "titleColored": "Our problems.",
+    "text": "With our IT outsourcing model by TOP teams from Latam. Focus on your business while we focus on your technology.",
+    "buttons": {
+      "contact": "Contact",
+      "aboutUs": "About Us"
+    }
+  },
+  "partners": {
+    "title": "Our developers and consultants are making software for",
+    "subTitle": "TOP companies in USA and Latam"
+  },
+  "aboutUs": {
+    "title": "About",
+    "text": "We are the global software development consultant who develops and deploy most complex and high-profile projects"
+  },
+  "servicesCards": {
+    "title": "Services",
+    "firstCard": {
+      "title": "Staff Augmentation",
+      "text": "Expert software engineers work together with your internal team on your projects. These engineers join your existing staff, often working remote until project completion."
+    },
+    "secondCard": {
+      "title": "Dedicated Teams",
+      "text": "Presents talent which directly oversees the whole development project. This option provides a management structure with hands-on supervision of the workflow and tasks."
+    },
+    "thirthCard": {
+      "title": "Project-Based Model",
+      "text": "Your partner company oversees the entire development process: from establishing the specs, to allocating workflow, setting timescales and quality testing."
+    }
+  },
+  "contact": {
+    "title": "Let's talk!",
+    "text": "Jump-start your business with expert software engineering teams.",
+    "form": {
+      "name": "Your name",
+      "email": "Your email",
+      "company": "Your Company",
+      "message": "Your message",
+      "button": "Send",
+      "confirmation": "Thanks!. We will reply to you as soon as possible"
+    }
+  },
+  "footer": {
+
+  }
+}
