@@ -10,16 +10,16 @@ import common_es from "./translations/es/common.json";
 import common_en from "./translations/en/common.json";
 
 i18next.init({
-    interpolation: { escapeValue: false },  // React already does escaping
-    lng: 'en',
-      resources: {
-        en: {
-          common: common_en
-        },
-        es: {
-          common: common_es
-        },
-      },
+  interpolation: { escapeValue: false },
+  lng: 'en',
+  resources: {
+    en: {
+      common: common_en
+    },
+    es: {
+      common: common_es
+    },
+  },
 });
 
 ReactDOM.render(

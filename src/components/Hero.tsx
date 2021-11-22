@@ -1,40 +1,40 @@
 import { useEffect, useState } from "react";
+import { IPost } from "../interfaces/blogPost.interface";
+import MainService from "../services/main.service";
 
 const styleSection: any  = {
 	'background-image': "url('./assets/img/background.png')",
 };
 
-const Hero = (props: any) => {
-	const [posts, setPosts] = useState<any[]>();
-	useEffect(()=>{
-		const fetctPosts = async() => {
-			fetch('https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@andersonlaverde')
-				.then(response => response.json())
-				.then(data => {
-					console.log(data);
-					setPosts(data.items);
-				})
-		}
-		fetctPosts();
-	},[])
+const Hero: React.FC<{}> = (props) => {
+	const [posts, setPosts] = useState<IPost[]>();
+	
+  useEffect(() => {
+		const fetchPosts = async () => {
+      const postsData = await MainService.fetctPosts();
+      console.log (postsData);
+      setPosts(postsData.items);
+    }
+		fetchPosts();
+	}, [])
 
-	const postCard = (post: any) =>
-		<div className="col-span-1 rounded-3xl"
+	const postCard = (post: IPost) =>
+		<a className="col-span-1 rounded-3xl" href={post.link}
 			style={{backgroundImage: `url(${post.thumbnail})`, backgroundSize: 'cover'}}
 		>
 			{/* <img className="rounded-full h-24 w-24" src={post.thumbnail} /> */}
 			<h1 className="font-bold">
 				{post.title}
 			</h1>
-		</div>
+		</a>
 
 	return (
-		<section className="flex h-screen bg-fixed font-inter opacity-90" style={styleSection}>
+		<div className="flex h-screen bg-fixed font-inter opacity-90" style={styleSection}>
 			<div className="m-auto w-full grid grid-cols-5 gap-4">
 				<div className="col-start-2">
-					<img className="rounded-full h-60 w-60"
+					<img className="rounded-full"
 						src="./assets/img/anderson.jpg"
-						alt="Anderson Laverde Profile"
+						alt="Anderson Laverde"
 					/>
 				</div>
 
@@ -59,7 +59,7 @@ const Hero = (props: any) => {
 					</div>					
 				</div>
 			</div>
-		</section>
+		</div>
 	);
 }
 export default Hero;
