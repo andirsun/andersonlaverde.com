@@ -112,7 +112,7 @@ const Navbar = (props: any) => {
           </button>
         </div>
 
-        <div id="nav-content"
+        {/* <div id="nav-content"
           className="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20"
         >
 
@@ -128,9 +128,7 @@ const Navbar = (props: any) => {
             <li className="mr-10 text-white font-bold toggleColour languageSwitch">
               {props.t('navbar.spanish')}
             </li>
-            {/* <li className="toggleColour text-white font-bold mr-3">
-              Blog (Proximamente)
-            </li> */}
+            
             <li>
               <a id="navButton"
                 href="#contactForm"
@@ -140,11 +138,11 @@ const Navbar = (props: any) => {
               </a>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
 
       {/* Drowpdown Menu */}
-      <div id="dropMenu" className={`${!showDropMenu && 'invisible'} origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
+      {/* <div id="dropMenu" className={`${!showDropMenu && 'invisible'} origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}
         role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}
       >
         <div className="py-1" role="none">
@@ -162,7 +160,7 @@ const Navbar = (props: any) => {
           </div>
 
         </div>
-      </div>
+      </div> */}
 
 
     </nav>
