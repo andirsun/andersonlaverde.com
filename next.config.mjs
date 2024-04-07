@@ -27,6 +27,15 @@ const nextConfig = {
 
     return config
   },
+  redirects: async () => {
+    return [
+      {
+        source: '/',
+        permanent: true,
+        destination: 'https://second-pineapple-995158.framer.app/',
+      },
+    ];
+  },
 };
 
 export default nextConfig;
