@@ -1,32 +1,49 @@
-export type Post = {
-  slug: string;
-  date: string;
-  title: string;
-  excerpt: string;
-  tag: string;
-  read: string;
-};
+import { parseMediumFeed, type Post } from "@/lib/medium";
 
-// Replace with MDX files under content/posts when the blog grows.
-export const POSTS: Post[] = [
-  { slug: "fedora-on-m1", date: "2026.08.14", tag: "linux", read: "6 min",
-    title: "Running Fedora on a MacBook Pro M1, two years in",
-    excerpt: "What works, what still doesn't, and why I keep the setup anyway." },
-  { slug: "mcp-for-product-teams", date: "2026.07.03", tag: "ai", read: "9 min",
-    title: "What an MCP server actually does for a product team",
-    excerpt: "Notes from shipping MCP at Streamline: where it helped users and where it was just plumbing." },
-  { slug: "growth-is-deleting", date: "2026.06.02", tag: "growth", read: "8 min",
-    title: "Growth engineering is mostly deleting things",
-    excerpt: "Lessons from leading the Growth team: the experiments that mattered were the ones that removed steps." },
-  { slug: "memcache-client", date: "2026.04.21", tag: "node", read: "5 min",
-    title: "A small Memcache client, and why I wrote my own",
-    excerpt: "Revisiting an old Node microservices refactor and what I'd do differently today." },
-  { slug: "first-oss-patch", date: "2026.02.09", tag: "open source", read: "4 min",
-    title: "My first accepted open source patch",
-    excerpt: "The unglamorous path from reading an issue tracker to getting a merge." },
-  { slug: "typed-apis", date: "2025.11.30", tag: "typescript", read: "7 min",
-    title: "Typed APIs without the ceremony",
-    excerpt: "Sharing types between a Next.js frontend and a Node backend without dragging in a framework." },
+export type { Post };
+
+export const MEDIUM_URL = "https://andirsun.medium.com/";
+export const FEED_URL = "https://medium.com/feed/@andirsun";
+
+/** New Medium posts show up within an hour, no deploy needed. */
+const REVALIDATE_SECONDS = 3600;
+
+/** Snapshot of the feed, used only when Medium is unreachable so /blog never ships empty. */
+export const FALLBACK_POSTS: Post[] = [
+  {
+    id: "a5c1e4f39bb7",
+    title: "Renuncie a mi sueño como programador",
+    url: "https://andirsun.medium.com/renuncie-a-mi-sue%C3%B1o-como-programador-a5c1e4f39bb7",
+    published: "2021-08-04T17:29:57.000Z",
+    excerpt: "¿Qué haré ahora que deseché el que hasta ahora era mi plan de vida?",
+  },
+  {
+    id: "9cc025c33045",
+    title: "Un tapabocas en Murillo: La razón por la que ahora haré tecnología para salvar al mundo.",
+    url: "https://andirsun.medium.com/un-tapabocas-en-murillo-la-raz%C3%B3n-por-la-que-ahora-har%C3%A9-tecnolog%C3%ADa-para-salvar-al-mundo-9cc025c33045",
+    published: "2021-03-14T18:21:54.000Z",
+    excerpt:
+      "Aquí, sentado en una mesa con mi laptop en 74% de batería restante y con mi album lleno de fotos y bonitos recuerdos, me gustaría compartirles uno de esos…",
+  },
+  {
+    id: "7c0204aad83",
+    title: "Entiende Blockchain en 1000 palabras",
+    url: "https://andirsun.medium.com/entiende-blockchain-en-1000-palabras-7c0204aad83",
+    published: "2020-08-12T23:48:46.000Z",
+    excerpt: "La historia de Bitcoin Y Blockchain explicada como nunca antes y lo mejor de todo, es para Dummies.",
+  },
 ];
 
-export const TAGS = ["all", "linux", "ai", "growth", "node", "typescript", "open source"];
+export async function getPosts(): Promise<Post[]> {
+  try {
+    const response = await fetch(FEED_URL, {
+      headers: { "User-Agent": "Mozilla/5.0 (andersonlaverde.com)" },
+      next: { revalidate: REVALIDATE_SECONDS },
+    });
+    if (!response.ok) return FALLBACK_POSTS;
+    const posts = parseMediumFeed(await response.text());
+    return posts.length > 0 ? posts : FALLBACK_POSTS;
+  } catch {
+    return FALLBACK_POSTS;
+  }
+}

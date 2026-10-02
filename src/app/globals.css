@@ -192,6 +192,15 @@ h1 { font-size:clamp(30px,5vw,52px); line-height:1.1; letter-spacing:-.03em; mar
 .vidfoot { border-top:1px solid var(--line); padding:32px 0 72px; }
 .vidfoot p.sans { font-size:13px; line-height:1.6; color:var(--dim); margin:0; }
 
+/* Language switch: <T> renders both languages; the one not matching data-lang is hidden.
+   Default (no data-lang yet) shows English. */
+[data-l="es"] { display:none; }
+:root[data-lang="es"] [data-l="es"] { display:inline; }
+:root[data-lang="es"] [data-l="en"] { display:none; }
+#lang { font:inherit; font-size:11px; cursor:pointer; padding:6px 10px; border-radius:2px; border:1px solid var(--line); background:transparent; color:var(--dim); transition:.18s; }
+#lang:hover { color:var(--ink); border-color:var(--accent); }
+#lang b { color:var(--accent); font-weight:700; }
+
 /* /noticias — the daily digest keeps the email's structure in the site's terminal skin */
 .dg-notice { border:1px solid var(--line); border-left:2px solid var(--amber); background:var(--panel); padding:16px 18px; margin-bottom:36px; display:flex; flex-direction:column; gap:12px; }
 .dg-notice p { font-size:13px; line-height:1.7; color:var(--dim); margin:0; max-width:72ch; }
@@ -259,7 +268,7 @@ h1 { font-size:clamp(30px,5vw,52px); line-height:1.1; letter-spacing:-.03em; mar
 }
 
 @media print {
-  .scanlines, .glow, header, #theme, .actions, .cards, .typeline { display:none !important; }
+  .scanlines, .glow, header, #theme, #lang, .actions, .cards, .typeline { display:none !important; }
   body { background:#fff; color:#000; }
   .job, .stat, .chips span { break-inside:avoid; }
   /* a link is useless on paper unless the url comes with it */

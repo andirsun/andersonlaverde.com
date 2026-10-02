@@ -57,11 +57,12 @@ That was upgraded wholesale. **Files removed in the upgrade:** `tailwind.config.
 
 ```
 src/app/layout.tsx        shell: fonts, pre-paint theme script, Header, scanlines, CursorGlow
-src/app/page.tsx          CV — the main page (server component)
+src/app/page.tsx          home hub — intro + cards to /cv, /blog, /noticias
+src/app/cv/page.tsx       /cv — experience, education, stack (printable)
 src/app/blog/page.tsx     /blog
 src/app/videos/page.tsx   /videos
 src/app/globals.css       design tokens, all component CSS, print styles
-src/components/           Header, CursorGlow, TypedRoles, LisbonClock, PostList, PrintButton
+src/components/           Header, CursorGlow, TypedRoles, LisbonClock, PrintButton, T (i18n)
 src/data/                 experience.ts, posts.ts, videos.ts
 ```
 
@@ -197,7 +198,7 @@ Copy is in English, written in active voice, first person, understated. No super
 - `src/app/blog/[slug]/page.tsx` reading MDX from `content/posts/`; `src/data/posts.ts` becomes
   a filesystem read. RSS feed alongside it.
 - Real YouTube links and thumbnails in `src/data/videos.ts`.
-- Newsletter form posts nowhere — wire to Buttondown or Resend.
+- Blog email capture was removed (no blog newsletter yet). The only email list is /noticias.
 - Point `andersonlaverde.com` DNS at Vercel and remove the domain from Framer.
 
 <!-- BEGIN:nextjs-agent-rules -->

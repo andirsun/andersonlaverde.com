@@ -14,11 +14,12 @@ npm run dev
 
 ```
 src/app/layout.tsx        shell: fonts, theme bootstrap, header, scanlines, glow
-src/app/page.tsx          CV — the main page
+src/app/page.tsx          home hub — pick /cv, /blog, /noticias
+src/app/cv/page.tsx       /cv — experience, education, stack
 src/app/blog/page.tsx     /blog
 src/app/videos/page.tsx   /videos
 src/app/globals.css       terminal theme (CSS vars) + Tailwind v4 @theme
-src/components/           Header, CursorGlow, TypedRoles, LisbonClock, PostList, PrintButton
+src/components/           Header, CursorGlow, TypedRoles, LisbonClock, PrintButton, T (i18n)
 src/data/                 experience.ts, posts.ts, videos.ts — edit content here
 ```
 

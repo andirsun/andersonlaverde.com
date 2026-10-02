@@ -1,9 +1,40 @@
 import Image from "next/image";
 import Link from "next/link";
 import LisbonClock from "@/components/LisbonClock";
+import T from "@/components/T";
 import TypedRoles from "@/components/TypedRoles";
-import PrintButton from "@/components/PrintButton";
-import { JOBS, STATS, STACK, LINKS } from "@/data/experience";
+import { LINKS } from "@/data/experience";
+
+/** Home is a hub: who I am, then pick a section. The CV lives at /cv. */
+const SECTIONS = [
+  {
+    href: "/cv",
+    title: { en: "Experience, education and stack", es: "Experiencia, educación y stack" },
+    text: {
+      en: "Streamline since 2021 — full-stack, Growth technical lead, now AI Advocate. Before that, Slinqer and Colombian startups.",
+      es: "En Streamline desde 2021: full-stack, líder técnico de Growth y hoy AI Advocate. Antes, Slinqer y startups colombianas.",
+    },
+    go: { en: "./read-cv →", es: "./leer-cv →" },
+  },
+  {
+    href: "/blog",
+    title: { en: "Writing", es: "Lo que pienso" },
+    text: {
+      en: "What I write on Medium — technology, the environment and personal stories. Mostly in Spanish.",
+      es: "Lo que escribo en Medium: tecnología, medio ambiente e historias personales.",
+    },
+    go: { en: "read the blog →", es: "leer el blog →" },
+  },
+  {
+    href: "/noticias",
+    title: { en: "Colombia, sin intermediarios", es: "Colombia, sin intermediarios" },
+    text: {
+      en: "Daily digest of Colombian and Ibagué independent media, in Spanish. Read it here or get it by email.",
+      es: "Resumen diario de medios independientes de Colombia e Ibagué. Léelo aquí o recíbelo por correo.",
+    },
+    go: { en: "leer las noticias →", es: "leer las noticias →" },
+  },
+];
 
 export default function Home() {
   return (
@@ -12,23 +43,23 @@ export default function Home() {
         <div className="hero-copy">
           <div className="meta">
             <span style={{ color: "var(--accent)" }}>●</span>
-            <span>Lisbon, Portugal</span>
+            <span><T en="Lisbon, Portugal" es="Lisboa, Portugal" /></span>
             <span className="sep">|</span>
             <LisbonClock />
             <span className="sep">|</span>
-            <span style={{ color: "var(--amber)" }}>open to talk</span>
+            <span style={{ color: "var(--amber)" }}><T en="open to talk" es="abierto a conversar" /></span>
           </div>
           <h1>Anderson Laverde</h1>
           <TypedRoles />
           <p className="lede sans">
-            Software engineer at Streamline since 2021 — full-stack, then technical lead of Growth,
-            and today AI Advocate, working out where AI actually solves user problems. Startups and
-            video games lover, casual open source contributor, Linux as my desktop since 2019.
+            <T
+              en="Software engineer at Streamline since 2021 — full-stack, then technical lead of Growth, and today AI Advocate, working out where AI actually solves user problems. Startups and video games lover, casual open source contributor, Linux as my desktop since 2019."
+              es="Ingeniero de software en Streamline desde 2021: full-stack, luego líder técnico de Growth y hoy AI Advocate, buscando dónde la IA de verdad resuelve problemas de los usuarios. Me encantan las startups y los videojuegos, contribuyo de vez en cuando a open source y uso Linux de escritorio desde 2019."
+            />
           </p>
           <div className="actions">
-            <a className="btn" href="#cv">./read-cv</a>
+            <a className="btn" href="#sections"><T en="./choose" es="./elegir" /></a>
             <a className="btn-ghost" href="mailto:hola@andersonlaverde.com">mail --to=hola@</a>
-            <PrintButton />
           </div>
         </div>
         <div className="portrait">
@@ -43,89 +74,37 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="stats">
-        {STATS.map((s) => (
-          <div className="stat" key={s.label}>
-            <b>{s.value}</b>
-            <span>{s.label}</span>
-          </div>
-        ))}
-      </section>
-
-      <section id="cv" style={{ marginBottom: 88 }}>
+      <section id="sections">
         <div className="sec-head">
-          <h2><i>$</i> experience</h2>
-          <span className="right">2018 — present</span>
+          <h2><i>$</i> ls ~/</h2>
+          <span className="right"><T en="pick one" es="elige uno" /></span>
         </div>
-        {JOBS.map((j) => (
-          <article className="job" key={j.company + j.dates}>
-            <div>
-              <span className="when">{j.dates}</span>
-              <span className="co">{j.company}</span>
-            </div>
-            <div>
-              <h3>{j.role}</h3>
-              <p className="sans">{j.text}</p>
-              <div className="tags">
-                {j.tags.map((t) => <span key={t}>{t}</span>)}
-              </div>
-              {j.resource && (
-                <a className="joblink" href={j.resource.url} target="_blank" rel="noreferrer">
-                  {j.resource.label} →
-                </a>
-              )}
-            </div>
-          </article>
-        ))}
-      </section>
-
-      <section className="two">
-        <div>
-          <div className="sec-head"><h2><i>$</i> education</h2></div>
-          <span style={{ fontSize: 11, color: "var(--amber)" }}>2016 — 2020</span>
-          <h3 style={{ fontSize: 16, margin: "6px 0 4px", fontWeight: 500 }}>Computer Science Engineering</h3>
-          <span className="sans" style={{ fontSize: 13, color: "var(--dim)" }}>
-            Pontificia Universidad Javeriana Cali — focus on machine learning
-          </span>
+        <div className="cards">
+          {SECTIONS.map((s) => (
+            <Link className="card" href={s.href} key={s.href}>
+              <span className="kind">{s.href}</span>
+              <span className="title"><T en={s.title.en} es={s.title.es} /></span>
+              <span className="text sans"><T en={s.text.en} es={s.text.es} /></span>
+              <span className="go"><T en={s.go.en} es={s.go.es} /></span>
+            </Link>
+          ))}
         </div>
-        <div>
-          <div className="sec-head"><h2><i>$</i> stack</h2></div>
-          <div className="chips">
-            {STACK.map((s) => <span key={s}>{s}</span>)}
-          </div>
-        </div>
-      </section>
-
-      <section className="cards">
-        <Link className="card" href="/blog">
-          <span className="kind">/blog</span>
-          <span className="title">Notes on Linux, TS and shipping</span>
-          <span className="text sans">
-            Short writeups from daily work: open source contributions, Fedora setup, growth and AI engineering.
-          </span>
-          <span className="go">read the blog →</span>
-        </Link>
-        <Link className="card" href="/videos">
-          <span className="kind">/videos</span>
-          <span className="title">Life in Lisbon, on camera</span>
-          <span className="text sans">
-            Weekends, volleyball and the odd afternoon at the aquarium, filmed around Portugal.
-            Mostly in Spanish.
-          </span>
-          <span className="go">watch →</span>
-        </Link>
       </section>
 
       <section id="contact" className="contact">
-        <h2>Let&apos;s make something great.</h2>
+        <h2><T en="Let's make something great." es="Hagamos algo grande." /></h2>
         <p className="sans">
-          Remote-friendly, timezone Lisbon. Happy to talk about AI in real products, growth
-          engineering, open source or a good mechanical keyboard.
+          <T
+            en="Remote-friendly, timezone Lisbon. Happy to talk about AI in real products, growth engineering, open source or a good mechanical keyboard."
+            es="Trabajo en remoto, en horario de Lisboa. Encantado de hablar de IA en productos reales, growth engineering, open source o un buen teclado mecánico."
+          />
         </p>
         <div className="links">
           {LINKS.map((l) => <a href={l.url} key={l.url}>{l.label}</a>)}
         </div>
-        <p className="fine">© {new Date().getFullYear()} Anderson Laverde — built from Lisbon</p>
+        <p className="fine">
+          © {new Date().getFullYear()} Anderson Laverde — <T en="built from Lisbon" es="hecho desde Lisboa" />
+        </p>
       </section>
     </main>
   );
