@@ -18,10 +18,10 @@ const SECTIONS = [
   },
   {
     href: "/blog",
-    title: { en: "Notes on Linux, TS and shipping", es: "Notas sobre Linux, TS y entregar" },
+    title: { en: "Writing", es: "Lo que pienso" },
     text: {
-      en: "Short writeups from daily work: open source contributions, Fedora setup, growth and AI engineering.",
-      es: "Textos cortos del trabajo diario: contribuciones open source, mi setup de Fedora, growth e ingeniería con IA.",
+      en: "What I write on Medium — technology, the environment and personal stories. Mostly in Spanish.",
+      es: "Lo que escribo en Medium: tecnología, medio ambiente e historias personales.",
     },
     go: { en: "read the blog →", es: "leer el blog →" },
   },

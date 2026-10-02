@@ -1,27 +1,59 @@
 import type { Metadata } from "next";
-import PostList from "@/components/PostList";
 import T from "@/components/T";
+import { MEDIUM_URL, getPosts } from "@/data/posts";
+
+/** Pick up new Medium posts without a redeploy. */
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Writing",
-  description: "Notes on Linux, TypeScript, growth and AI engineering.",
+  description: "What I write on Medium — technology, the environment and personal stories, in Spanish.",
 };
 
-export default function BlogPage() {
+const DATE = {
+  en: new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }),
+  es: new Intl.DateTimeFormat("es-CO", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }),
+};
+
+export default async function BlogPage() {
+  const posts = await getPosts();
+
   return (
     <main>
       <section className="page-head">
         <span className="kind">/blog</span>
-        <h1><T en="Writing" es="Escritos" /></h1>
+        <h1><T en="Writing" es="Lo que pienso" /></h1>
         <p className="lede sans">
           <T
-            en="Notes from daily work — Linux on a MacBook, TypeScript at scale, AI in real products, and small open source contributions. Mostly written on a Friday afternoon."
-            es="Notas del trabajo diario: Linux en un MacBook, TypeScript a escala, IA en productos reales y pequeñas contribuciones open source. Casi siempre escritas un viernes por la tarde."
+            en="What I write on Medium — technology, the environment and personal stories. Mostly in Spanish."
+            es="Lo que escribo en Medium: tecnología, medio ambiente e historias personales."
           />
         </p>
+        <div className="actions">
+          <a className="btn" href={MEDIUM_URL} target="_blank" rel="noreferrer">
+            <T en="follow on medium" es="seguirme en medium" />
+          </a>
+        </div>
       </section>
 
-      <PostList />
+      <section className="posts">
+        {posts.map((p) => {
+          const d = p.published ? new Date(p.published) : null;
+          return (
+            <a className="post" href={p.url} target="_blank" rel="noreferrer" key={p.id} lang="es">
+              <span className="date">
+                {d && <T en={DATE.en.format(d)} es={DATE.es.format(d)} />}
+              </span>
+              <span className="body">
+                <span className="t">{p.title}</span>
+                {p.excerpt && <span className="x sans">{p.excerpt}</span>}
+                <span className="m">medium</span>
+              </span>
+              <span className="arrow">↗</span>
+            </a>
+          );
+        })}
+      </section>
 
       <section className="vidfoot">
         <p className="fine">© {new Date().getFullYear()} Anderson Laverde</p>

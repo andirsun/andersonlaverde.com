@@ -62,7 +62,7 @@ src/app/cv/page.tsx       /cv — experience, education, stack (printable)
 src/app/blog/page.tsx     /blog
 src/app/videos/page.tsx   /videos
 src/app/globals.css       design tokens, all component CSS, print styles
-src/components/           Header, CursorGlow, TypedRoles, LisbonClock, PostList, PrintButton
+src/components/           Header, CursorGlow, TypedRoles, LisbonClock, PrintButton, T (i18n)
 src/data/                 experience.ts, posts.ts, videos.ts
 ```
 

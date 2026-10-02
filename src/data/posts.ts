@@ -1,35 +1,49 @@
-import type { Text } from "@/lib/lang";
+import { parseMediumFeed, type Post } from "@/lib/medium";
 
-export type Post = {
-  slug: string;
-  date: string;
-  title: Text;
-  excerpt: Text;
-  tag: string;
-  read: string;
-};
+export type { Post };
 
-// Replace with MDX files under content/posts when the blog grows.
-export const POSTS: Post[] = [
-  { slug: "fedora-on-m1", date: "2026.08.14", tag: "linux", read: "6 min",
-    title: { en: "Running Fedora on a MacBook Pro M1, two years in", es: "Fedora en un MacBook Pro M1, dos años después" },
-    excerpt: { en: "What works, what still doesn't, and why I keep the setup anyway.", es: "Qué funciona, qué todavía no, y por qué sigo con esta configuración." } },
-  { slug: "mcp-for-product-teams", date: "2026.07.03", tag: "ai", read: "9 min",
-    title: { en: "What an MCP server actually does for a product team", es: "Qué hace de verdad un servidor MCP por un equipo de producto" },
-    excerpt: { en: "Notes from shipping MCP at Streamline: where it helped users and where it was just plumbing.", es: "Notas de lanzar MCP en Streamline: dónde ayudó a los usuarios y dónde era solo fontanería." } },
-  { slug: "growth-is-deleting", date: "2026.06.02", tag: "growth", read: "8 min",
-    title: { en: "Growth engineering is mostly deleting things", es: "Growth engineering es sobre todo borrar cosas" },
-    excerpt: { en: "Lessons from leading the Growth team: the experiments that mattered were the ones that removed steps.", es: "Lecciones de liderar el equipo de Growth: los experimentos que importaron fueron los que quitaban pasos." } },
-  { slug: "memcache-client", date: "2026.04.21", tag: "node", read: "5 min",
-    title: { en: "A small Memcache client, and why I wrote my own", es: "Un pequeño cliente de Memcache, y por qué escribí el mío" },
-    excerpt: { en: "Revisiting an old Node microservices refactor and what I'd do differently today.", es: "Revisando un viejo refactor de microservicios en Node y qué haría distinto hoy." } },
-  { slug: "first-oss-patch", date: "2026.02.09", tag: "open source", read: "4 min",
-    title: { en: "My first accepted open source patch", es: "Mi primer parche open source aceptado" },
-    excerpt: { en: "The unglamorous path from reading an issue tracker to getting a merge.", es: "El camino poco glamuroso de leer un issue tracker a conseguir un merge." } },
-  { slug: "typed-apis", date: "2025.11.30", tag: "typescript", read: "7 min",
-    title: { en: "Typed APIs without the ceremony", es: "APIs tipadas sin ceremonia" },
-    excerpt: { en: "Sharing types between a Next.js frontend and a Node backend without dragging in a framework.", es: "Compartir tipos entre un frontend Next.js y un backend Node sin arrastrar un framework." } },
+export const MEDIUM_URL = "https://andirsun.medium.com/";
+export const FEED_URL = "https://medium.com/feed/@andirsun";
+
+/** New Medium posts show up within an hour, no deploy needed. */
+const REVALIDATE_SECONDS = 3600;
+
+/** Snapshot of the feed, used only when Medium is unreachable so /blog never ships empty. */
+export const FALLBACK_POSTS: Post[] = [
+  {
+    id: "a5c1e4f39bb7",
+    title: "Renuncie a mi sueño como programador",
+    url: "https://andirsun.medium.com/renuncie-a-mi-sue%C3%B1o-como-programador-a5c1e4f39bb7",
+    published: "2021-08-04T17:29:57.000Z",
+    excerpt: "¿Qué haré ahora que deseché el que hasta ahora era mi plan de vida?",
+  },
+  {
+    id: "9cc025c33045",
+    title: "Un tapabocas en Murillo: La razón por la que ahora haré tecnología para salvar al mundo.",
+    url: "https://andirsun.medium.com/un-tapabocas-en-murillo-la-raz%C3%B3n-por-la-que-ahora-har%C3%A9-tecnolog%C3%ADa-para-salvar-al-mundo-9cc025c33045",
+    published: "2021-03-14T18:21:54.000Z",
+    excerpt:
+      "Aquí, sentado en una mesa con mi laptop en 74% de batería restante y con mi album lleno de fotos y bonitos recuerdos, me gustaría compartirles uno de esos…",
+  },
+  {
+    id: "7c0204aad83",
+    title: "Entiende Blockchain en 1000 palabras",
+    url: "https://andirsun.medium.com/entiende-blockchain-en-1000-palabras-7c0204aad83",
+    published: "2020-08-12T23:48:46.000Z",
+    excerpt: "La historia de Bitcoin Y Blockchain explicada como nunca antes y lo mejor de todo, es para Dummies.",
+  },
 ];
 
-export const TAGS = ["all", "linux", "ai", "growth", "node", "typescript", "open source"];
-export const TAG_LABEL_ES: Record<string, string> = { all: "todo", ai: "ia" };
+export async function getPosts(): Promise<Post[]> {
+  try {
+    const response = await fetch(FEED_URL, {
+      headers: { "User-Agent": "Mozilla/5.0 (andersonlaverde.com)" },
+      next: { revalidate: REVALIDATE_SECONDS },
+    });
+    if (!response.ok) return FALLBACK_POSTS;
+    const posts = parseMediumFeed(await response.text());
+    return posts.length > 0 ? posts : FALLBACK_POSTS;
+  } catch {
+    return FALLBACK_POSTS;
+  }
+}
