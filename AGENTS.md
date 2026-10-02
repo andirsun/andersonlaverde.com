@@ -57,7 +57,8 @@ That was upgraded wholesale. **Files removed in the upgrade:** `tailwind.config.
 
 ```
 src/app/layout.tsx        shell: fonts, pre-paint theme script, Header, scanlines, CursorGlow
-src/app/page.tsx          CV — the main page (server component)
+src/app/page.tsx          home hub — intro + cards to /cv, /blog, /noticias
+src/app/cv/page.tsx       /cv — experience, education, stack (printable)
 src/app/blog/page.tsx     /blog
 src/app/videos/page.tsx   /videos
 src/app/globals.css       design tokens, all component CSS, print styles

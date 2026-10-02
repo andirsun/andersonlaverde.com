@@ -2,8 +2,32 @@ import Image from "next/image";
 import Link from "next/link";
 import LisbonClock from "@/components/LisbonClock";
 import TypedRoles from "@/components/TypedRoles";
-import PrintButton from "@/components/PrintButton";
-import { JOBS, STATS, STACK, LINKS } from "@/data/experience";
+import { LINKS } from "@/data/experience";
+
+/** Home is a hub: who I am, then pick a section. The CV lives at /cv. */
+const SECTIONS = [
+  {
+    href: "/cv",
+    kind: "/cv",
+    title: "Experience, education and stack",
+    text: "Streamline since 2021 — full-stack, Growth technical lead, now AI Advocate. Before that, Slinqer and Colombian startups.",
+    go: "./read-cv →",
+  },
+  {
+    href: "/blog",
+    kind: "/blog",
+    title: "Notes on Linux, TS and shipping",
+    text: "Short writeups from daily work: open source contributions, Fedora setup, growth and AI engineering.",
+    go: "read the blog →",
+  },
+  {
+    href: "/noticias",
+    kind: "/noticias",
+    title: "Colombia, sin intermediarios",
+    text: "Daily digest of Colombian and Ibagué independent media, in Spanish. Read it here or get it by email.",
+    go: "leer las noticias →",
+  },
+];
 
 export default function Home() {
   return (
@@ -26,9 +50,8 @@ export default function Home() {
             video games lover, casual open source contributor, Linux as my desktop since 2019.
           </p>
           <div className="actions">
-            <a className="btn" href="#cv">./read-cv</a>
+            <a className="btn" href="#sections">./choose</a>
             <a className="btn-ghost" href="mailto:hola@andersonlaverde.com">mail --to=hola@</a>
-            <PrintButton />
           </div>
         </div>
         <div className="portrait">
@@ -43,77 +66,21 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="stats">
-        {STATS.map((s) => (
-          <div className="stat" key={s.label}>
-            <b>{s.value}</b>
-            <span>{s.label}</span>
-          </div>
-        ))}
-      </section>
-
-      <section id="cv" style={{ marginBottom: 88 }}>
+      <section id="sections">
         <div className="sec-head">
-          <h2><i>$</i> experience</h2>
-          <span className="right">2018 — present</span>
+          <h2><i>$</i> ls ~/</h2>
+          <span className="right">pick one</span>
         </div>
-        {JOBS.map((j) => (
-          <article className="job" key={j.company + j.dates}>
-            <div>
-              <span className="when">{j.dates}</span>
-              <span className="co">{j.company}</span>
-            </div>
-            <div>
-              <h3>{j.role}</h3>
-              <p className="sans">{j.text}</p>
-              <div className="tags">
-                {j.tags.map((t) => <span key={t}>{t}</span>)}
-              </div>
-              {j.resource && (
-                <a className="joblink" href={j.resource.url} target="_blank" rel="noreferrer">
-                  {j.resource.label} →
-                </a>
-              )}
-            </div>
-          </article>
-        ))}
-      </section>
-
-      <section className="two">
-        <div>
-          <div className="sec-head"><h2><i>$</i> education</h2></div>
-          <span style={{ fontSize: 11, color: "var(--amber)" }}>2016 — 2020</span>
-          <h3 style={{ fontSize: 16, margin: "6px 0 4px", fontWeight: 500 }}>Computer Science Engineering</h3>
-          <span className="sans" style={{ fontSize: 13, color: "var(--dim)" }}>
-            Pontificia Universidad Javeriana Cali — focus on machine learning
-          </span>
+        <div className="cards">
+          {SECTIONS.map((s) => (
+            <Link className="card" href={s.href} key={s.href}>
+              <span className="kind">{s.kind}</span>
+              <span className="title">{s.title}</span>
+              <span className="text sans">{s.text}</span>
+              <span className="go">{s.go}</span>
+            </Link>
+          ))}
         </div>
-        <div>
-          <div className="sec-head"><h2><i>$</i> stack</h2></div>
-          <div className="chips">
-            {STACK.map((s) => <span key={s}>{s}</span>)}
-          </div>
-        </div>
-      </section>
-
-      <section className="cards">
-        <Link className="card" href="/blog">
-          <span className="kind">/blog</span>
-          <span className="title">Notes on Linux, TS and shipping</span>
-          <span className="text sans">
-            Short writeups from daily work: open source contributions, Fedora setup, growth and AI engineering.
-          </span>
-          <span className="go">read the blog →</span>
-        </Link>
-        <Link className="card" href="/videos">
-          <span className="kind">/videos</span>
-          <span className="title">Life in Lisbon, on camera</span>
-          <span className="text sans">
-            Weekends, volleyball and the odd afternoon at the aquarium, filmed around Portugal.
-            Mostly in Spanish.
-          </span>
-          <span className="go">watch →</span>
-        </Link>
       </section>
 
       <section id="contact" className="contact">
