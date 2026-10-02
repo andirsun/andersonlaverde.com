@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import T from "@/components/T";
 import { CHANNEL_URL, bestThumbnail, getVideos } from "@/data/videos";
 
 /** Pick up new uploads without a redeploy. */
@@ -11,13 +12,14 @@ export const metadata: Metadata = {
   description: "Bits of life in Lisbon, filmed around Portugal — the personal channel, mostly in Spanish.",
 };
 
-const MONTH_YEAR = new Intl.DateTimeFormat("en-GB", {
-  month: "short",
-  year: "numeric",
-});
+const MONTH_YEAR = {
+  en: new Intl.DateTimeFormat("en-GB", { month: "short", year: "numeric" }),
+  es: new Intl.DateTimeFormat("es-CO", { month: "short", year: "numeric" }),
+};
 
-function formatDate(iso: string) {
-  return MONTH_YEAR.format(new Date(iso));
+function Date_({ iso }: { iso: string }) {
+  const d = new Date(iso);
+  return <T en={MONTH_YEAR.en.format(d)} es={MONTH_YEAR.es.format(d)} />;
 }
 
 export default async function VideosPage() {
@@ -29,10 +31,12 @@ export default async function VideosPage() {
     <main>
       <section className="page-head">
         <span className="kind">/videos</span>
-        <h1>Off the clock</h1>
+        <h1><T en="Off the clock" es="Fuera del trabajo" /></h1>
         <p className="lede sans">
-          I film bits of life here in Lisbon. Moving countries, weekends, and
-          whatever the city is up to. Mostly in Spanish.
+          <T
+            en="I film bits of life here in Lisbon. Moving countries, weekends, and whatever the city is up to. Mostly in Spanish."
+            es="Grabo pedazos de mi vida aquí en Lisboa: mudarme de país, fines de semana y lo que esté pasando en la ciudad. Casi todo en español."
+          />
         </p>
         <div className="actions">
           <a
@@ -41,10 +45,10 @@ export default async function VideosPage() {
             target="_blank"
             rel="noreferrer"
           >
-            subscribe on youtube
+            <T en="subscribe on youtube" es="suscribirme en youtube" />
           </a>
           <Link className="btn-ghost" href="/blog">
-            read instead
+            <T en="read instead" es="mejor leer" />
           </Link>
         </div>
       </section>
@@ -66,7 +70,7 @@ export default async function VideosPage() {
             />
           </a>
           <span style={{ fontSize: 11, color: "var(--amber)" }}>
-            latest · {formatDate(featured.published)}
+            <T en="latest" es="último" /> · <Date_ iso={featured.published} />
           </span>
           <h2>{featured.title}</h2>
         </div>
@@ -84,7 +88,7 @@ export default async function VideosPage() {
               </span>
               <span>
                 <span className="t">{video.title}</span>
-                <span className="m">{formatDate(video.published)}</span>
+                <span className="m"><Date_ iso={video.published} /></span>
               </span>
             </a>
           ))}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PostList from "@/components/PostList";
+import T from "@/components/T";
 
 export const metadata: Metadata = {
   title: "Writing",
@@ -11,22 +12,18 @@ export default function BlogPage() {
     <main>
       <section className="page-head">
         <span className="kind">/blog</span>
-        <h1>Writing</h1>
+        <h1><T en="Writing" es="Escritos" /></h1>
         <p className="lede sans">
-          Notes from daily work — Linux on a MacBook, TypeScript at scale, AI in real products, and
-          small open source contributions. Mostly written on a Friday afternoon.
+          <T
+            en="Notes from daily work — Linux on a MacBook, TypeScript at scale, AI in real products, and small open source contributions. Mostly written on a Friday afternoon."
+            es="Notas del trabajo diario: Linux en un MacBook, TypeScript a escala, IA en productos reales y pequeñas contribuciones open source. Casi siempre escritas un viernes por la tarde."
+          />
         </p>
       </section>
 
       <PostList />
 
-      <section className="sub">
-        <h2>Get new posts by email</h2>
-        <p className="sans">No schedule, no spam — just when something is worth writing down.</p>
-        <form className="subform" action="#" method="post">
-          <input type="email" name="email" placeholder="you@domain.com" required />
-          <button className="btn" type="submit">subscribe</button>
-        </form>
+      <section className="vidfoot">
         <p className="fine">© {new Date().getFullYear()} Anderson Laverde</p>
       </section>
     </main>

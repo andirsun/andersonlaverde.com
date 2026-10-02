@@ -198,7 +198,7 @@ Copy is in English, written in active voice, first person, understated. No super
 - `src/app/blog/[slug]/page.tsx` reading MDX from `content/posts/`; `src/data/posts.ts` becomes
   a filesystem read. RSS feed alongside it.
 - Real YouTube links and thumbnails in `src/data/videos.ts`.
-- Newsletter form posts nowhere — wire to Buttondown or Resend.
+- Blog email capture was removed (no blog newsletter yet). The only email list is /noticias.
 - Point `andersonlaverde.com` DNS at Vercel and remove the domain from Framer.
 
 <!-- BEGIN:nextjs-agent-rules -->

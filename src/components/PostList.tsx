@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { POSTS, TAGS } from "@/data/posts";
+import T from "@/components/T";
+import { POSTS, TAGS, TAG_LABEL_ES } from "@/data/posts";
 
 export default function PostList() {
   const [tag, setTag] = useState("all");
@@ -13,7 +14,7 @@ export default function PostList() {
       <div className="filters">
         {TAGS.map((t) => (
           <button key={t} type="button" aria-pressed={tag === t} onClick={() => setTag(t)}>
-            {t}
+            <T en={t} es={TAG_LABEL_ES[t] ?? t} />
           </button>
         ))}
       </div>
@@ -23,9 +24,9 @@ export default function PostList() {
           <Link className="post" href={`/blog/${p.slug}`} key={p.slug}>
             <span className="date">{p.date}</span>
             <span className="body">
-              <span className="t">{p.title}</span>
-              <span className="x sans">{p.excerpt}</span>
-              <span className="m">{p.tag} · {p.read}</span>
+              <span className="t"><T en={p.title.en} es={p.title.es} /></span>
+              <span className="x sans"><T en={p.excerpt.en} es={p.excerpt.es} /></span>
+              <span className="m"><T en={p.tag} es={TAG_LABEL_ES[p.tag] ?? p.tag} /> · {p.read}</span>
             </span>
             <span className="arrow">→</span>
           </Link>

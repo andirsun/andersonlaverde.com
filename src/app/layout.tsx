@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import CursorGlow from "@/components/CursorGlow";
+import { langScript } from "@/lib/lang";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://andersonlaverde.com"),
@@ -31,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500&display=swap"
           rel="stylesheet"
         />
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script dangerouslySetInnerHTML={{ __html: themeScript + langScript }} />
       </head>
       <body>
         <div className="scanlines" />
