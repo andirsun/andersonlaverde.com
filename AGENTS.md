@@ -70,6 +70,17 @@ keeps http(s) links. The page is in Spanish with emojis on purpose — it mirror
 structure — and the weather block is always Ibagué. `/noticias/[date]` renders past days on
 demand; `DayPicker` jumps between them.
 
+**Email subscriptions.** `/noticias` has a sign-up form (`SubscribeForm`). The list lives in the
+private repo `andirsun/noticias-suscriptores` (`subscribers.json`), written by
+`/api/noticias/subscribe` and `/api/noticias/unsubscribe` through the GitHub contents API with
+optimistic concurrency (stale sha → retry). Requires the Vercel env var
+`SUBSCRIBERS_GITHUB_TOKEN`: a fine-grained token with Contents read/write on that one repo only.
+Each subscriber has a random token; `/noticias/baja?t=…` confirms removal with a POST (never GET,
+so mail-client link scanners can't unsubscribe people), and the same endpoint serves RFC 8058
+one-click unsubscribe. Removal deletes the entry. The list is capped at `MAX_SUBSCRIBERS`
+because the Hermes cron sends one message per subscriber through Proton Bridge from
+noticias@andersonlaverde.com.
+
 The channel is personal vlogs in Spanish, not dev content. `/videos` copy and the home-page
 card are written to match that — don't reintroduce "dev setups / build-alongs" framing.
 

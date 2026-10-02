@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import DayPicker from "@/components/DayPicker";
 import { Archive, DigestView, IndependentNotice } from "@/components/Digest";
+import { SubscribeForm } from "@/components/SubscribeForm";
 import { getDays, getDigest } from "@/data/noticias";
 
 /** Pick up the new day from the gist without a redeploy. */
@@ -36,6 +37,8 @@ export default async function NoticiasPage() {
       ) : (
         <p className="dg-note">El resumen de hoy todavía no está disponible. Vuelve en un rato.</p>
       )}
+
+      <SubscribeForm />
 
       <Archive days={days.slice(1)} />
 

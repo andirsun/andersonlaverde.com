@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import DayPicker from "@/components/DayPicker";
 import { Archive, DigestView, IndependentNotice } from "@/components/Digest";
+import { SubscribeForm } from "@/components/SubscribeForm";
 import { getDays, getDigest } from "@/data/noticias";
 
 export const revalidate = 3600;
@@ -41,6 +42,7 @@ export default async function NoticiasDayPage({ params }: Props) {
       <IndependentNotice />
       <DayPicker days={days} current={digest.date} />
       <DigestView digest={digest} />
+      <SubscribeForm />
       <Archive days={days} current={digest.date} />
 
       <section className="vidfoot">
