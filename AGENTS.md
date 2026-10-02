@@ -9,6 +9,21 @@ destinations. Replaces a Framer page (`second-pineapple-995158.framer.app`).
 
 Repo: `andirsun/andersonlaverde.com`, branch `master`. Deployed on Vercel.
 
+## Workflow — every change goes through a PR (mandatory)
+
+Anderson reviews every change on its Vercel preview before it reaches production.
+
+- **Never commit or push to `master` directly.** Every requested change, however small (copy,
+  CSS, docs, this file), goes on its own branch off the latest `origin/master` and is opened as a
+  pull request **against `master`**.
+- **Never merge a PR yourself** unless Anderson explicitly asks to merge that specific PR. Opening
+  the PR is the end of the task.
+- Before opening the PR, run `npx tsc --noEmit`, `npm run lint`, `npm test` and `npm run build`,
+  and list the results in the PR description.
+- After pushing, wait for the Vercel check and hand back the **PR URL plus the preview URL**
+  (`gh pr checks <n>` or the deployment status) so Anderson can verify it.
+- Follow-up changes to an open PR go on that same branch; unrelated changes get a new PR.
+
 ## Stack
 
 | | |
