@@ -36,7 +36,8 @@ export default function Header() {
     localStorage.setItem("al-theme", next);
   };
 
-  const cur = (href: string) => (path === href ? "page" : undefined);
+  const cur = (href: string) =>
+    path === href || path.startsWith(`${href}/`) ? "page" : undefined;
 
   return (
     <header>
@@ -48,6 +49,7 @@ export default function Header() {
           <Link href="/#cv">cv</Link>
           <Link href="/blog" aria-current={cur("/blog")}>blog</Link>
           <Link href="/videos" aria-current={cur("/videos")}>videos</Link>
+          <Link href="/noticias" aria-current={cur("/noticias")}>noticias</Link>
           <Link href="/#contact">contact</Link>
         </div>
         <button id="theme" type="button" onClick={toggle}>

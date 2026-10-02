@@ -61,6 +61,15 @@ dates alone. `FALLBACK_VIDEOS` in that file is a committed snapshot used only wh
 fails; without it a failed build would ship an empty page. Parser lives in `src/lib/youtube.ts`
 and is tested in `test/youtube.test.ts`.
 
+**`/noticias` is not hand-edited either.** It shows the daily digest of Colombian independent
+media (national + Ibagué) that a Hermes cron job emails every morning. After sending, the job
+publishes the day as JSON to gist `1b185fd5b80ff3361f5e4c1d749ea640` (`YYYY-MM-DD.json` plus
+`index.json`); `src/data/noticias.ts` reads it with hourly revalidation, so no deploy is needed.
+The JSON is treated as untrusted: `src/lib/noticias.ts` validates it, renders no HTML, and only
+keeps http(s) links. The page is in Spanish with emojis on purpose — it mirrors the email's
+structure — and the weather block is always Ibagué. `/noticias/[date]` renders past days on
+demand; `DayPicker` jumps between them.
+
 The channel is personal vlogs in Spanish, not dev content. `/videos` copy and the home-page
 card are written to match that — don't reintroduce "dev setups / build-alongs" framing.
 
