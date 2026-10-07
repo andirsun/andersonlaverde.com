@@ -6,6 +6,9 @@ import { langScript } from "@/lib/lang";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://andersonlaverde.com"),
+  // "./" resolves against each route's own path, so every page declares itself
+  // on the apex domain as canonical (www and preview hosts are duplicates).
+  alternates: { canonical: "./" },
   title: {
     default: "Anderson Laverde — Software Engineer",
     template: "%s — Anderson Laverde",
