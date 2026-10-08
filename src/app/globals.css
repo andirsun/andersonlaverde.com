@@ -202,6 +202,15 @@ h1 { font-size:clamp(30px,5vw,52px); line-height:1.1; letter-spacing:-.03em; mar
 #lang b { color:var(--accent); font-weight:700; }
 
 /* /noticias — the daily digest keeps the email's structure in the site's terminal skin */
+.dg-intro { margin-bottom:36px; }
+.embed { position:relative; aspect-ratio:16/9; max-width:720px; border:1px solid var(--line); border-radius:2px; background:var(--panel); overflow:hidden; }
+.embed iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+.embed button { all:unset; position:absolute; inset:0; cursor:pointer; display:block; }
+.embed button img { width:100%; height:100%; object-fit:cover; display:block; transition:opacity .2s; }
+.embed button:hover img { opacity:.8; }
+.embed button:focus-visible { outline:2px solid var(--accent); outline-offset:-2px; }
+.embed .play { position:absolute; left:16px; bottom:16px; font-size:12px; color:var(--bg); background:var(--accent); padding:8px 12px; border-radius:2px; transition:background .2s; }
+.embed button:hover .play { background:var(--amber); }
 .dg-notice { border:1px solid var(--line); border-left:2px solid var(--amber); background:var(--panel); padding:16px 18px; margin-bottom:36px; display:flex; flex-direction:column; gap:12px; }
 .dg-notice p { font-size:13px; line-height:1.7; color:var(--dim); margin:0; max-width:72ch; }
 .dg-notice strong { color:var(--ink); font-weight:500; }
