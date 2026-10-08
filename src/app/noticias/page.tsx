@@ -34,6 +34,8 @@ export default async function NoticiasPage() {
         </p>
       </section>
 
+      <IndependentNotice />
+
       <section className="dg-intro">
         <div className="sec-head">
           <h2>
@@ -42,8 +44,6 @@ export default async function NoticiasPage() {
         </div>
         <VideoEmbed id={INTRO_VIDEO.id} title={INTRO_VIDEO.title} thumbnail={introThumbnail} />
       </section>
-
-      <IndependentNotice />
 
       {latest && days.length > 1 && <DayPicker days={days} current={latest.date} />}
 
