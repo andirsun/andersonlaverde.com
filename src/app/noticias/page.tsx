@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import DayPicker from "@/components/DayPicker";
 import { Archive, DigestView, IndependentNotice } from "@/components/Digest";
 import { SubscribeForm } from "@/components/SubscribeForm";
+import { VideoEmbed } from "@/components/VideoEmbed";
 import { getDays, getDigest } from "@/data/noticias";
+import { bestThumbnail } from "@/data/videos";
+
+/** Unlisted, so it never shows up in the channel feed — the id has to live here. */
+const INTRO_VIDEO = { id: "Vg-E-ITghK4", title: "Las noticias que leo día a día" };
 
 /** Pick up the new day from the gist without a redeploy. */
 export const revalidate = 3600;
@@ -16,6 +21,7 @@ export const metadata: Metadata = {
 export default async function NoticiasPage() {
   const days = await getDays();
   const latest = days[0] ? await getDigest(days[0].date) : null;
+  const introThumbnail = await bestThumbnail(INTRO_VIDEO.id);
 
   return (
     <main lang="es">
@@ -29,6 +35,15 @@ export default async function NoticiasPage() {
       </section>
 
       <IndependentNotice />
+
+      <section className="dg-intro">
+        <div className="sec-head">
+          <h2>
+            <i>$</i> por-qué-existe-esto
+          </h2>
+        </div>
+        <VideoEmbed id={INTRO_VIDEO.id} title={INTRO_VIDEO.title} thumbnail={introThumbnail} />
+      </section>
 
       {latest && days.length > 1 && <DayPicker days={days} current={latest.date} />}
 
