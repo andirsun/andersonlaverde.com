@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import Manuscript from "@/components/Manuscript";
 import PostViews from "@/components/PostViews";
 import { getLocalPost, getLocalPosts, getPages } from "@/data/localPosts";
 
@@ -57,28 +58,7 @@ export default async function PostPage({ params }: Props) {
       {pages.length > 0 ? (
         <PostViews
           transcript={transcript}
-          manuscript={
-            <div className="manuscript">
-              {pages.map((p, i) => (
-                <figure key={p.src}>
-                  {/* Ink is a transparent mask painted in --ink, so it follows the theme. */}
-                  <div
-                    className="ink"
-                    role="img"
-                    aria-label={`Página ${i + 1} del manuscrito. El texto está en la transcripción.`}
-                    style={{
-                      aspectRatio: `${p.width} / ${p.height}`,
-                      maskImage: `url(${p.src})`,
-                      WebkitMaskImage: `url(${p.src})`,
-                    }}
-                  />
-                  <figcaption>
-                    Página {i + 1} de {pages.length}
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-          }
+          manuscript={<Manuscript pages={pages} />}
         />
       ) : (
         transcript
