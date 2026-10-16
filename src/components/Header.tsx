@@ -48,7 +48,7 @@ export default function Header() {
     <header>
       <nav>
         <Link className="brand" href="/">
-          <span>~/</span>anderson
+          Anderson Laverde
         </Link>
         <div className="navlinks">
           <Link href="/cv" aria-current={cur("/cv")}>cv</Link>

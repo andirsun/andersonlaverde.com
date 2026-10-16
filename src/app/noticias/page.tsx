@@ -24,7 +24,7 @@ export default async function NoticiasPage() {
   return (
     <main lang="es">
       <section className="page-head">
-        <span className="kind">/noticias</span>
+        <span className="kind">Noticias</span>
         <h1>Colombia, sin intermediarios</h1>
         <p className="lede sans">
           Cada mañana leo lo que publicaron los medios independientes de Colombia y de Ibagué, y lo
@@ -37,7 +37,7 @@ export default async function NoticiasPage() {
       <section className="dg-intro">
         <div className="sec-head">
           <h2>
-            <i>$</i> por-qué-existe-esto
+            Por qué existe esto
           </h2>
         </div>
         <VideoEmbed id={INTRO_VIDEO.id} title={INTRO_VIDEO.title} />

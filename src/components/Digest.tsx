@@ -116,7 +116,7 @@ export function Archive({ days, current }: { days: DayEntry[]; current?: string 
     <section className="dg-archive" lang="es">
       <div className="sec-head">
         <h2>
-          <i>$</i> días anteriores
+          Días anteriores
         </h2>
         <span className="right">{days.length} días</span>
       </div>

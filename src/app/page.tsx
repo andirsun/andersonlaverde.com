@@ -9,15 +9,17 @@ import { LINKS } from "@/data/experience";
 const SECTIONS = [
   {
     href: "/cv",
+    kind: "CV",
     title: { en: "Experience, education and stack", es: "Experiencia, educación y stack" },
     text: {
       en: "Streamline since 2021 — full-stack, Growth technical lead, now AI Advocate. Before that, Slinqer and Colombian startups.",
       es: "En Streamline desde 2021: full-stack, líder técnico de Growth y hoy AI Advocate. Antes, Slinqer y startups colombianas.",
     },
-    go: { en: "./read-cv →", es: "./leer-cv →" },
+    go: { en: "read the CV →", es: "leer el CV →" },
   },
   {
     href: "/blog",
+    kind: "Blog",
     title: { en: "Writing", es: "Lo que pienso" },
     text: {
       en: "What I write — technology, the environment and personal stories, some of it by hand. Mostly in Spanish.",
@@ -27,6 +29,7 @@ const SECTIONS = [
   },
   {
     href: "/noticias",
+    kind: "Noticias",
     title: { en: "Colombia, sin intermediarios", es: "Colombia, sin intermediarios" },
     text: {
       en: "Daily digest of Colombian and Ibagué independent media, in Spanish. Read it here or get it by email.",
@@ -58,8 +61,8 @@ export default function Home() {
             />
           </p>
           <div className="actions">
-            <a className="btn" href="#sections"><T en="./choose" es="./elegir" /></a>
-            <a className="btn-ghost" href="mailto:hola@andersonlaverde.com">mail --to=hola@</a>
+            <a className="btn" href="#sections"><T en="Explore" es="Explorar" /></a>
+            <a className="btn-ghost" href="mailto:hola@andersonlaverde.com"><T en="Write to me" es="Escríbeme" /></a>
           </div>
         </div>
         <div className="portrait">
@@ -76,13 +79,13 @@ export default function Home() {
 
       <section id="sections">
         <div className="sec-head">
-          <h2><i>$</i> ls ~/</h2>
+          <h2><T en="What you’ll find here" es="Qué hay aquí" /></h2>
           <span className="right"><T en="pick one" es="elige uno" /></span>
         </div>
         <div className="cards">
           {SECTIONS.map((s) => (
             <Link className="card" href={s.href} key={s.href}>
-              <span className="kind">{s.href}</span>
+              <span className="kind">{s.kind}</span>
               <span className="title"><T en={s.title.en} es={s.title.es} /></span>
               <span className="text sans"><T en={s.text.en} es={s.text.es} /></span>
               <span className="go"><T en={s.go.en} es={s.go.es} /></span>

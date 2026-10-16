@@ -30,7 +30,7 @@ export default async function VideosPage() {
   return (
     <main>
       <section className="page-head">
-        <span className="kind">/videos</span>
+        <span className="kind">Videos</span>
         <h1><T en="Off the clock" es="Fuera del trabajo" /></h1>
         <p className="lede sans">
           <T

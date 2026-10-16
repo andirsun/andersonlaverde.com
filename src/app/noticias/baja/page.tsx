@@ -19,7 +19,7 @@ export default async function BajaPage({ searchParams }: Props) {
     <main lang="es">
       <section className="page-head">
         <span className="kind">
-          <Link href="/noticias">/noticias</Link>/baja
+          <Link href="/noticias">Noticias</Link>
         </span>
         <h1>Darse de baja</h1>
         {token ? (
