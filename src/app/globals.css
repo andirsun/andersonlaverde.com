@@ -183,11 +183,14 @@ h1 { font-size:clamp(30px,5vw,52px); line-height:1.1; letter-spacing:-.03em; mar
 .ms-page:focus-visible { outline:1px solid var(--accent); outline-offset:6px; }
 .manuscript .ink { width:100%; background:var(--ink); mask-size:100% 100%; -webkit-mask-size:100% 100%; mask-repeat:no-repeat; -webkit-mask-repeat:no-repeat; }
 .manuscript figcaption { font-size:10px; color:var(--dim); margin-top:14px; }
-.ms-nav { display:none; }
+.ms-nav, .ms-tail { display:none; }
 /* Desktop: pages side by side in a strip that scrolls horizontally and snaps to each page. */
 @media (min-width: 761px) {
-  .ms-strip { flex-direction:row; max-width:none; gap:24px; overflow-x:auto; scroll-snap-type:x proximity; overscroll-behavior-x:contain; padding-bottom:16px; scrollbar-color:var(--line) transparent; }
-  .ms-strip figure { flex:0 0 auto; scroll-snap-align:start; }
+  .ms-strip { flex-direction:row; max-width:none; gap:24px; overflow-x:auto; scroll-snap-type:x mandatory; overscroll-behavior-x:contain; padding-bottom:16px; scrollbar-color:var(--line) transparent; }
+  .ms-strip figure { flex:0 0 auto; scroll-snap-align:start; scroll-snap-stop:always; }
+  .ms-tail { display:block; flex-shrink:0; }
+  /* Full bleed to the right: the strip starts at the text column and runs to the window edge. */
+  .ms-strip { margin-right:calc(50% - 50vw); }
   .ms-strip .ink { height:min(76vh, 820px); width:auto; }
   .ms-nav { display:flex; gap:8px; justify-content:flex-end; margin-bottom:14px; }
   .ms-nav button, .ms-bar button { font:inherit; font-size:12px; cursor:pointer; padding:6px 12px; border-radius:2px; border:1px solid var(--line); background:transparent; color:var(--ink); transition:.18s; }

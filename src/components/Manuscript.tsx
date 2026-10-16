@@ -22,17 +22,27 @@ export default function Manuscript({ pages }: { pages: Page[] }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [open, setOpen] = useState<number | null>(null);
   const [edges, setEdges] = useState({ start: true, end: pages.length < 2 });
+  // Room after the last page, so every page (the last one too) can scroll to the left edge.
+  const [tail, setTail] = useState(0);
 
   const updateEdges = () => {
     const el = strip.current;
     if (!el) return;
-    setEdges({ start: el.scrollLeft < 8, end: el.scrollLeft + el.clientWidth > el.scrollWidth - 8 });
+    const figs = el.querySelectorAll("figure");
+    const last = figs[figs.length - 1];
+    const lastStart = last ? last.offsetLeft - el.offsetLeft : 0;
+    setEdges({ start: el.scrollLeft < 8, end: el.scrollLeft >= lastStart - 8 });
   };
 
   useEffect(() => {
     const el = strip.current;
     if (!el) return;
-    const ro = new ResizeObserver(updateEdges);
+    const ro = new ResizeObserver(() => {
+      const figs = el.querySelectorAll("figure");
+      const last = figs[figs.length - 1];
+      setTail(figs.length > 1 && last ? Math.max(0, el.clientWidth - last.offsetWidth - 24) : 0);
+      updateEdges();
+    });
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
@@ -64,7 +74,7 @@ export default function Manuscript({ pages }: { pages: Page[] }) {
     const target = dir === 1
       ? starts.find((x) => x > el.scrollLeft + 8)
       : starts.findLast((x) => x < el.scrollLeft - 8);
-    el.scrollTo({ left: target ?? (dir === 1 ? el.scrollWidth : 0), behavior: "smooth" });
+    if (target !== undefined) el.scrollTo({ left: target, behavior: "smooth" });
   };
 
   const show = (i: number) => {
@@ -94,6 +104,7 @@ export default function Manuscript({ pages }: { pages: Page[] }) {
             </figcaption>
           </figure>
         ))}
+        {tail > 0 && <div className="ms-tail" aria-hidden="true" style={{ flexBasis: tail }} />}
       </div>
 
       <dialog
