@@ -31,7 +31,7 @@ export default function DayPicker({ days, current }: { days: DayEntry[]; current
         ← anterior
       </button>
       <label>
-        <span>$ ver día</span>
+        <span>Ver día</span>
         <select value={current} onChange={(e) => go(e.target.value)}>
           {groupByMonth(days).map((g) => (
             <optgroup label={g.label} key={g.label}>

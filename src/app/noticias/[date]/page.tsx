@@ -34,7 +34,7 @@ export default async function NoticiasDayPage({ params }: Props) {
     <main lang="es">
       <section className="page-head">
         <span className="kind">
-          <Link href="/noticias">/noticias</Link>/{digest.date}
+          <Link href="/noticias">Noticias</Link>
         </span>
         <h1>{digest.dateLabel}</h1>
       </section>

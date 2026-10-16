@@ -133,8 +133,11 @@ Loaded from Google Fonts in `layout.tsx`.
 ### Rules
 
 - Borders, not shadows, define structure. 1px `--line`, radius 0–2px. Nothing is pill-shaped.
-- Section headings are `$ section-name` in uppercase mono, the `$` in accent — shell prompts.
-- Buttons read like commands: `./read-cv`, `mail --to=hola@`, `export --pdf`.
+- The site is for a general audience. The terminal look is visual only (mono type, colors,
+  borders); **copy never uses command syntax** — no `$` prompts, `./`, `--flags`, `cat`, `ls`,
+  `cd`, `~/` or URL paths as labels. Buttons and headings are plain words: "Write to me",
+  "Save as PDF", "Experience".
+- Section headings are uppercase mono.
 - No emoji. No gradients as decoration (the two decorative layers below are the exception).
 - Placeholders for missing imagery are diagonal-stripe boxes with a monospace filename label.
 

@@ -13,7 +13,7 @@ export default function CvPage() {
   return (
     <main>
       <section className="page-head">
-        <span className="kind">/cv</span>
+        <span className="kind">CV</span>
         <h1>Curriculum vitae</h1>
         <p className="lede sans">
           <T
@@ -22,7 +22,7 @@ export default function CvPage() {
           />
         </p>
         <div className="actions">
-          <a className="btn" href="mailto:hola@andersonlaverde.com">mail --to=hola@</a>
+          <a className="btn" href="mailto:hola@andersonlaverde.com"><T en="Write to me" es="Escríbeme" /></a>
           <PrintButton />
         </div>
       </section>
@@ -38,7 +38,7 @@ export default function CvPage() {
 
       <section id="experience" style={{ marginBottom: 88 }}>
         <div className="sec-head">
-          <h2><i>$</i> <T en="experience" es="experiencia" /></h2>
+          <h2><T en="experience" es="experiencia" /></h2>
           <span className="right"><T en="2018 — present" es="2018 — hoy" /></span>
         </div>
         {JOBS.map((j) => (
@@ -65,7 +65,7 @@ export default function CvPage() {
 
       <section className="two">
         <div>
-          <div className="sec-head"><h2><i>$</i> <T en="education" es="educación" /></h2></div>
+          <div className="sec-head"><h2><T en="education" es="educación" /></h2></div>
           <span style={{ fontSize: 11, color: "var(--amber)" }}>2016 — 2020</span>
           <h3 style={{ fontSize: 16, margin: "6px 0 4px", fontWeight: 500 }}>
             <T en="Computer Science Engineering" es="Ingeniería de Sistemas y Computación" />
@@ -78,7 +78,7 @@ export default function CvPage() {
           </span>
         </div>
         <div>
-          <div className="sec-head"><h2><i>$</i> stack</h2></div>
+          <div className="sec-head"><h2><T en="tools" es="herramientas" /></h2></div>
           <div className="chips">
             {STACK.map((s) => <span key={s}>{s}</span>)}
           </div>
