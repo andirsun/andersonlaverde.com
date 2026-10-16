@@ -2,6 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // Posts written for this site are read from disk at request time (/blog revalidates
+  // hourly for Medium), so the files have to ship with the server bundle.
+  outputFileTracingIncludes: {
+    "/blog": ["./content/posts/**/*"],
+    "/blog/rss.xml": ["./content/posts/**/*"],
+    "/blog/[slug]": ["./content/posts/**/*", "./public/blog/**/*"],
+  },
   images: {
     remotePatterns: [
       // YouTube serves video thumbnails from both hostnames

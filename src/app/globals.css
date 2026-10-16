@@ -168,6 +168,19 @@ h1 { font-size:clamp(30px,5vw,52px); line-height:1.1; letter-spacing:-.03em; mar
 .post .m { font-size:10px; color:var(--dim); }
 .post .arrow { font-size:12px; color:var(--accent); }
 
+/* A post hosted here: transcript and handwritten pages as two tabs. */
+.page-head .meta { font-size:11px; color:var(--dim); margin:0; }
+.views { display:flex; gap:8px; flex-wrap:wrap; padding-bottom:28px; border-bottom:1px solid var(--line); margin-bottom:36px; }
+.views button { font:inherit; font-size:11px; cursor:pointer; padding:6px 11px; border-radius:2px; border:1px solid var(--line); background:transparent; color:var(--dim); transition:.18s; }
+.views button:hover { border-color:var(--accent); }
+.views button[aria-selected="true"] { background:var(--accent); border-color:var(--accent); color:var(--bg); }
+.transcript { max-width:62ch; padding-bottom:56px; }
+.transcript p { font-size:17px; line-height:1.85; margin:0 0 1.3em; text-wrap:pretty; }
+.manuscript { display:flex; flex-direction:column; gap:28px; max-width:620px; padding-bottom:56px; }
+.manuscript figure { margin:0; border:1px solid var(--line); background:var(--panel); padding:clamp(12px,3vw,28px); }
+.manuscript .ink { width:100%; background:var(--ink); mask-size:100% 100%; -webkit-mask-size:100% 100%; mask-repeat:no-repeat; -webkit-mask-repeat:no-repeat; }
+.manuscript figcaption { font-size:10px; color:var(--dim); margin-top:14px; }
+
 .sub { padding:44px 0 72px; display:flex; flex-direction:column; gap:14px; border-top:1px solid var(--line); margin-top:44px; }
 .sub h2 { font-size:18px; margin:0; font-weight:500; }
 .sub p { font-size:13px; color:var(--dim); margin:0; }
