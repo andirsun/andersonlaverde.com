@@ -20,8 +20,8 @@ const SECTIONS = [
     href: "/blog",
     title: { en: "Writing", es: "Lo que pienso" },
     text: {
-      en: "What I write on Medium — technology, the environment and personal stories. Mostly in Spanish.",
-      es: "Lo que escribo en Medium: tecnología, medio ambiente e historias personales.",
+      en: "What I write — technology, the environment and personal stories, some of it by hand. Mostly in Spanish.",
+      es: "Lo que escribo: tecnología, medio ambiente e historias personales, a veces a mano.",
     },
     go: { en: "read the blog →", es: "leer el blog →" },
   },

@@ -35,8 +35,8 @@ export default function PostViews({ transcript, manuscript }: { transcript: Reac
   return (
     <>
       <div className="views" role="tablist" aria-label="Versión del texto">
-        {tab("transcript", "cat transcripcion.md")}
-        {tab("manuscript", "open manuscrito/")}
+        {tab("transcript", "Leer el texto")}
+        {tab("manuscript", "Ver el manuscrito")}
       </div>
       <div id="panel-transcript" role="tabpanel" aria-labelledby="tab-transcript" hidden={view !== "transcript"}>
         {transcript}

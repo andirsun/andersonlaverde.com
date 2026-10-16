@@ -45,7 +45,7 @@ export default async function PostPage({ params }: Props) {
     <main lang="es">
       <section className="page-head">
         <span className="kind">
-          <Link href="/blog">/blog</Link>/{post.slug}
+          <Link href="/blog">Blog</Link>
         </span>
         <h1>{post.title}</h1>
         <p className="meta">
@@ -73,7 +73,7 @@ export default async function PostPage({ params }: Props) {
                     }}
                   />
                   <figcaption>
-                    {String(i + 1).padStart(2, "0")}.png · {i + 1}/{pages.length}
+                    Página {i + 1} de {pages.length}
                   </figcaption>
                 </figure>
               ))}
@@ -86,7 +86,7 @@ export default async function PostPage({ params }: Props) {
 
       <section className="vidfoot">
         <p className="fine">
-          <Link href="/blog">← cd ../blog</Link> · <a href="/blog/rss.xml">rss</a>
+          <Link href="/blog">← Volver al blog</Link> · <a href="/blog/rss.xml">Seguir por RSS</a>
         </p>
       </section>
     </main>

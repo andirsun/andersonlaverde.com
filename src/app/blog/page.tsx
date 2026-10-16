@@ -23,7 +23,7 @@ export default async function BlogPage() {
   return (
     <main>
       <section className="page-head">
-        <span className="kind">/blog</span>
+        <span className="kind">Blog</span>
         <h1><T en="Writing" es="Lo que pienso" /></h1>
         <p className="lede sans">
           <T
@@ -32,11 +32,11 @@ export default async function BlogPage() {
           />
         </p>
         <div className="actions">
-          <a className="btn" href="/blog/rss.xml">
-            <T en="subscribe --rss" es="suscribirme --rss" />
+          <a className="btn" href={MEDIUM_URL} target="_blank" rel="noreferrer">
+            <T en="Older posts on Medium" es="Lo anterior en Medium" />
           </a>
-          <a className="btn-ghost" href={MEDIUM_URL} target="_blank" rel="noreferrer">
-            <T en="older posts on medium" es="lo anterior en medium" />
+          <a className="btn-ghost" href="/blog/rss.xml">
+            <T en="Follow by RSS" es="Seguir por RSS" />
           </a>
         </div>
       </section>
@@ -53,9 +53,9 @@ export default async function BlogPage() {
                 <span className="t">{p.title}</span>
                 {p.excerpt && <span className="x sans">{p.excerpt}</span>}
                 <span className="m">
-                  {p.source === "medium" ? "medium" : p.handwritten
-                    ? <T en="handwritten + transcript" es="manuscrito + transcripción" />
-                    : "andersonlaverde.com"}
+                  {p.source === "medium" ? "Medium" : p.handwritten
+                    ? <T en="handwritten, with transcript" es="escrito a mano, con transcripción" />
+                    : <T en="on this site" es="en esta página" />}
                 </span>
               </span>
               <span className="arrow">{p.source === "medium" ? "↗" : "→"}</span>
