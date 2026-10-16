@@ -63,6 +63,8 @@ src/app/blog/page.tsx     /blog — local posts + Medium feed, newest first
 src/app/blog/[slug]/      a post hosted here (transcript + handwritten pages as tabs)
 src/app/blog/rss.xml/     RSS for /blog
 content/posts/            posts written for this site, one .md per post
+scripts/ink-mask.sh       handwritten page photos/exports → transparent ink masks
+.claude/skills/           publish-handwritten-post: the end-to-end procedure for a new post
 src/app/videos/page.tsx   /videos
 src/app/globals.css       design tokens, all component CSS, print styles
 src/components/           Header, CursorGlow, TypedRoles, LisbonClock, PrintButton, T (i18n)
@@ -85,8 +87,11 @@ YYYY-MM-DD, `excerpt`, `pages`) then plain paragraphs separated by blank lines. 
 HTML is rendered. `pages: N` means there are handwritten pages at `public/blog/<slug>/01.png` …
 The post page shows the transcript by default and the pages in a second tab. The pages are
 **transparent PNG masks**, not photos: the page renders them as `mask-image` painted in
-`--ink`, so the handwriting follows the theme. To convert a white-background export:
-`magick in.jpg -colorspace gray -negate -level 8%,60% -background black -alpha shape out.png`.
+`--ink`, so the handwriting follows the theme. Convert pages with
+`scripts/ink-mask.sh <slug> <images…>`: it accepts white- or dark-background exports and phone
+photos of paper, and writes `public/blog/<slug>/01.png`, `02.png`, …
+**To publish a new handwritten post, follow `.claude/skills/publish-handwritten-post/SKILL.md`**
+(convert, transcribe, write the post, show it locally, then open the PR).
 Transcripts are literal — spelling and accents fixed, wording left as written. Old posts stay on
 Medium and are merged into /blog from its feed (`getBlogEntries` in `src/data/posts.ts`).
 `next.config.ts` traces `content/` and `public/blog/` into the server bundle; keep that when
