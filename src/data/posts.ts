@@ -1,6 +1,10 @@
+import { getLocalPosts } from "@/data/localPosts";
 import { parseMediumFeed, type Post } from "@/lib/medium";
 
 export type { Post };
+
+/** A row on /blog: either a post hosted here or one on Medium. */
+export type BlogEntry = Post & { source: "local" | "medium"; handwritten?: boolean };
 
 export const MEDIUM_URL = "https://andirsun.medium.com/";
 export const FEED_URL = "https://medium.com/feed/@andirsun";
@@ -46,4 +50,19 @@ export async function getPosts(): Promise<Post[]> {
   } catch {
     return FALLBACK_POSTS;
   }
+}
+
+/** Posts written here plus the Medium feed, newest first. */
+export async function getBlogEntries(): Promise<BlogEntry[]> {
+  const local: BlogEntry[] = getLocalPosts().map((p) => ({
+    id: p.slug,
+    title: p.title,
+    url: `/blog/${p.slug}`,
+    published: `${p.date}T00:00:00.000Z`,
+    excerpt: p.excerpt,
+    source: "local",
+    handwritten: p.pages > 0,
+  }));
+  const medium: BlogEntry[] = (await getPosts()).map((p) => ({ ...p, source: "medium" }));
+  return [...local, ...medium].sort((a, b) => b.published.localeCompare(a.published));
 }

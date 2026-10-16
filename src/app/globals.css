@@ -168,6 +168,40 @@ h1 { font-size:clamp(30px,5vw,52px); line-height:1.1; letter-spacing:-.03em; mar
 .post .m { font-size:10px; color:var(--dim); }
 .post .arrow { font-size:12px; color:var(--accent); }
 
+/* A post hosted here: transcript and handwritten pages as two tabs. */
+.page-head .meta { font-size:11px; color:var(--dim); margin:0; }
+.views { display:flex; gap:8px; flex-wrap:wrap; padding-bottom:28px; border-bottom:1px solid var(--line); margin-bottom:36px; }
+.views button { font:inherit; font-size:11px; cursor:pointer; padding:6px 11px; border-radius:2px; border:1px solid var(--line); background:transparent; color:var(--dim); transition:.18s; }
+.views button:hover { border-color:var(--accent); }
+.views button[aria-selected="true"] { background:var(--accent); border-color:var(--accent); color:var(--bg); }
+.transcript { max-width:62ch; padding-bottom:56px; }
+.transcript p { font-size:17px; line-height:1.85; margin:0 0 1.3em; text-wrap:pretty; }
+/* Handwritten pages, like a photo pair in an article: side by side in a block wider than the
+   text, centered. More pages scroll sideways freely (no snapping). */
+.manuscript { margin:0 calc(50% - min(580px, 50vw - 24px)) 56px; }
+.ms-strip { display:flex; gap:24px; overflow-x:auto; overscroll-behavior-x:contain; padding-bottom:10px; scrollbar-color:var(--line) transparent; }
+.ms-page { flex:0 0 calc(50% - 12px); display:block; padding:0; border:1px solid var(--line); border-radius:2px; background:var(--panel); cursor:zoom-in; transition:border-color .2s; }
+.ms-page:hover { border-color:var(--accent); }
+.ms-page:focus-visible { outline:1px solid var(--accent); outline-offset:4px; }
+/* Margin in % of the page width, so thumbnail and zoomed page scale exactly alike. */
+.manuscript .ink { display:block; width:88%; margin:6%; background:var(--ink); mask-size:100% 100%; -webkit-mask-size:100% 100%; mask-repeat:no-repeat; -webkit-mask-repeat:no-repeat; }
+.manuscript figcaption { font-family:"IBM Plex Sans", system-ui, sans-serif; font-size:13px; color:var(--dim); text-align:center; margin-top:14px; }
+.ms-nav { display:inline-flex; gap:6px; margin-right:12px; vertical-align:middle; }
+.ms-nav button { font:inherit; font-size:12px; cursor:pointer; padding:3px 10px; border-radius:2px; border:1px solid var(--line); background:transparent; color:var(--ink); transition:.18s; }
+.ms-nav button:hover:not(:disabled) { border-color:var(--accent); color:var(--accent); }
+.ms-nav button:disabled { opacity:.35; cursor:default; }
+@media (max-width: 760px) {
+  .ms-strip { flex-direction:column; overflow:visible; }
+}
+/* Zoomed page: grows from its thumbnail (see Manuscript.tsx), over a fading backdrop. */
+.ms-zoom { position:fixed; inset:0; width:100vw; height:100dvh; max-width:none; max-height:none; margin:0; padding:24px 16px; border:0; background:transparent; overflow-y:auto; overscroll-behavior:contain; cursor:zoom-out; }
+.ms-zoom::backdrop { background:color-mix(in oklab, var(--bg) 94%, transparent); opacity:0; transition:opacity .25s; }
+.ms-zoom.is-visible::backdrop { opacity:1; }
+.ms-zoom-page { width:min(880px, 100%); margin:0 auto; border:1px solid var(--line); border-radius:2px; background:var(--panel); transform-origin:0 0; }
+.ms-zoom-page .ink { width:88%; margin:6%; background:var(--ink); mask-size:100% 100%; -webkit-mask-size:100% 100%; mask-repeat:no-repeat; -webkit-mask-repeat:no-repeat; }
+.ms-zoom-hint { font-size:11px; color:var(--dim); text-align:center; margin:-2% 0 4%; opacity:0; transition:opacity .2s; }
+.ms-zoom.is-visible .ms-zoom-hint { opacity:1; }
+
 .sub { padding:44px 0 72px; display:flex; flex-direction:column; gap:14px; border-top:1px solid var(--line); margin-top:44px; }
 .sub h2 { font-size:18px; margin:0; font-weight:500; }
 .sub p { font-size:13px; color:var(--dim); margin:0; }

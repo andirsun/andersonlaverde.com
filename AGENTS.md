@@ -59,7 +59,10 @@ That was upgraded wholesale. **Files removed in the upgrade:** `tailwind.config.
 src/app/layout.tsx        shell: fonts, pre-paint theme script, Header, scanlines, CursorGlow
 src/app/page.tsx          home hub — intro + cards to /cv, /blog, /noticias
 src/app/cv/page.tsx       /cv — experience, education, stack (printable)
-src/app/blog/page.tsx     /blog
+src/app/blog/page.tsx     /blog — local posts + Medium feed, newest first
+src/app/blog/[slug]/      a post hosted here (transcript + handwritten pages as tabs)
+src/app/blog/rss.xml/     RSS for /blog
+content/posts/            posts written for this site, one .md per post
 src/app/videos/page.tsx   /videos
 src/app/globals.css       design tokens, all component CSS, print styles
 src/components/           Header, CursorGlow, TypedRoles, LisbonClock, PrintButton, T (i18n)
@@ -76,6 +79,18 @@ carries title, id, publish date and thumbnail — but no duration, which is why 
 dates alone. `FALLBACK_VIDEOS` in that file is a committed snapshot used only when the fetch
 fails; without it a failed build would ship an empty page. Parser lives in `src/lib/youtube.ts`
 and is tested in `test/youtube.test.ts`.
+
+**Blog posts hosted here** live in `content/posts/<slug>.md`: frontmatter (`title`, `date`
+YYYY-MM-DD, `excerpt`, `pages`) then plain paragraphs separated by blank lines. No Markdown or
+HTML is rendered. `pages: N` means there are handwritten pages at `public/blog/<slug>/01.png` …
+The post page shows the transcript by default and the pages in a second tab. The pages are
+**transparent PNG masks**, not photos: the page renders them as `mask-image` painted in
+`--ink`, so the handwriting follows the theme. To convert a white-background export:
+`magick in.jpg -colorspace gray -negate -level 8%,60% -background black -alpha shape out.png`.
+Transcripts are literal — spelling and accents fixed, wording left as written. Old posts stay on
+Medium and are merged into /blog from its feed (`getBlogEntries` in `src/data/posts.ts`).
+`next.config.ts` traces `content/` and `public/blog/` into the server bundle; keep that when
+renaming them.
 
 **`/noticias` is not hand-edited either.** It shows the daily digest of Colombian independent
 media (national + Ibagué) that a Hermes cron job emails every morning. After sending, the job
@@ -195,8 +210,6 @@ Copy is in English, written in active voice, first person, understated. No super
   it through `next/image` (square slot, `object-fit:cover`, `object-position:50% 22%`). Drop the
   real 3:4 portrait in at that exact path and no code changes are needed. Do not deploy until
   it is replaced.
-- `src/app/blog/[slug]/page.tsx` reading MDX from `content/posts/`; `src/data/posts.ts` becomes
-  a filesystem read. RSS feed alongside it.
 - Real YouTube links and thumbnails in `src/data/videos.ts`.
 - Blog email capture was removed (no blog newsletter yet). The only email list is /noticias.
 - Point `andersonlaverde.com` DNS at Vercel and remove the domain from Framer.
