@@ -77,6 +77,26 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="latest">
+        <div className="sec-head">
+          <h2><T en="Latest project" es="Mi proyecto más reciente" /></h2>
+          <span className="right"><T en="in progress" es="en curso" /></span>
+        </div>
+        <div className="cards">
+          <a className="card" href="https://lukitas.andersonlaverde.com" target="_blank" rel="noopener">
+            <span className="kind"><T en="What I’m building now" es="Lo que estoy construyendo" /></span>
+            <span className="title">Lukitas</span>
+            <span className="text sans">
+              <T
+                en="A free, open-source personal finance app: your budget, and you’ll actually enjoy looking after it. Log an expense in seconds and see where your money goes. Web first, then Android and iPhone."
+                es="Una app de finanzas personales gratis y de código abierto: tu presupuesto, y te va a dar gusto cuidarlo. Anota un gasto en segundos y mira en qué se va tu plata. Primero la web, luego Android e iPhone."
+              />
+            </span>
+            <span className="go"><T en="see Lukitas →" es="ver Lukitas →" /></span>
+          </a>
+        </div>
+      </section>
+
       <section id="sections">
         <div className="sec-head">
           <h2><T en="What you’ll find here" es="Qué hay aquí" /></h2>
