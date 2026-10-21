@@ -23,7 +23,7 @@ export function SubscribeForm() {
   return (
     <section className="sub dg-sub" id="suscribirse" lang="es">
       <h2>📬 ¿Quieres recibir lo mismo que leo yo cada mañana?</h2>
-      <p className="sans">
+      <p className="prose">
         Deja tu correo y te llega este mismo resumen todos los días, solo desde{" "}
         <strong>noticias@andersonlaverde.com</strong>. Nada más: sin publicidad y sin compartir tu
         correo con nadie. Cada correo trae un enlace para darte de baja, que te borra de la lista.
@@ -41,7 +41,7 @@ export function SubscribeForm() {
           {/* honeypot: hidden from people, filled by bots */}
           <input className="sr-only" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
           <button className="btn" type="submit" disabled={state.kind === "sending"}>
-            {state.kind === "sending" ? "guardando…" : "suscribirme"}
+            {state.kind === "sending" ? "Guardando…" : "Suscribirme"}
           </button>
         </form>
       )}
@@ -79,7 +79,7 @@ export function UnsubscribeButton({ token }: { token: string }) {
     <>
       <div className="actions">
         <button className="btn" type="button" onClick={confirm} disabled={state.kind === "sending"}>
-          {state.kind === "sending" ? "procesando…" : "darme de baja"}
+          {state.kind === "sending" ? "Procesando…" : "Darme de baja"}
         </button>
       </div>
       {state.kind === "error" && (

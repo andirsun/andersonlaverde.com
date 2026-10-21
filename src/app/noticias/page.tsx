@@ -26,7 +26,7 @@ export default async function NoticiasPage() {
       <section className="page-head">
         <span className="kind">Noticias</span>
         <h1>Colombia, sin intermediarios</h1>
-        <p className="lede sans">
+        <p className="lede prose">
           Cada mañana leo lo que publicaron los medios independientes de Colombia y de Ibagué, y lo
           dejo aquí como un resumen por temas, para leer con el café.
         </p>

@@ -35,7 +35,7 @@ export default async function PostPage({ params }: Props) {
 
   const pages = getPages(post);
   const transcript = (
-    <article className="transcript sans">
+    <article className="transcript prose">
       {post.paragraphs.map((p, i) => (
         <p key={i}>{p}</p>
       ))}

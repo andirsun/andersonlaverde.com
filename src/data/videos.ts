@@ -1,4 +1,4 @@
-import { parseFeed, thumbnailUrl, type Video } from "@/lib/youtube";
+import { parseFeed, type Video } from "@/lib/youtube";
 
 export type { Video };
 
@@ -67,21 +67,5 @@ export async function getVideos(): Promise<Video[]> {
     return videos.length > 0 ? videos : FALLBACK_VIDEOS;
   } catch {
     return FALLBACK_VIDEOS;
-  }
-}
-
-/**
- * maxresdefault.jpg is sharper but missing on some uploads, so probe before
- * pointing the large featured slot at it.
- */
-export async function bestThumbnail(id: string): Promise<string> {
-  try {
-    const response = await fetch(thumbnailUrl(id, "max"), {
-      method: "HEAD",
-      next: { revalidate: REVALIDATE_SECONDS },
-    });
-    return thumbnailUrl(id, response.ok ? "max" : "hq");
-  } catch {
-    return thumbnailUrl(id, "hq");
   }
 }
