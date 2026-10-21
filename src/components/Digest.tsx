@@ -14,7 +14,7 @@ export const OUTLETS = [
 
 function Paragraph({ segments }: { segments: Segment[] }) {
   return (
-    <p className="sans">
+    <p className="prose">
       {segments.map((s, i) =>
         s.href ? (
           <a key={i} href={s.href} title={s.title} target="_blank" rel="noreferrer">
@@ -34,7 +34,7 @@ function RegionBlock({ region, local }: { region: Region; local?: boolean }) {
       {region.summary && (
         <div className={local ? "dg-pocas dg-pocas-local" : "dg-pocas"}>
           <h2>🎯 En pocas palabras</h2>
-          <p className="sans">{region.summary}</p>
+          <p className="prose">{region.summary}</p>
         </div>
       )}
       {region.sections.map((section) => (
@@ -68,7 +68,7 @@ export function DigestView({ digest }: { digest: Digest }) {
         {digest.weather && (
           <div className="dg-weather">
             <span>{digest.weather.line}</span>
-            {digest.weather.summary && <span className="sans">{digest.weather.summary}</span>}
+            {digest.weather.summary && <span className="prose">{digest.weather.summary}</span>}
           </div>
         )}
       </header>
@@ -90,7 +90,7 @@ export function DigestView({ digest }: { digest: Digest }) {
 export function IndependentNotice() {
   return (
     <aside className="dg-notice" lang="es">
-      <p className="sans">
+      <p className="prose">
         <strong>Solo medios independientes.</strong> Este resumen se arma cada mañana leyendo
         únicamente periodismo independiente colombiano — sin grandes conglomerados de medios. Cada
         frase enlaza a la nota original; el crédito y el trabajo son de cada medio. Si algo te
@@ -99,10 +99,10 @@ export function IndependentNotice() {
       <ul className="dg-outlets">
         {OUTLETS.map((o) => (
           <li key={o.name}>
-            <a href={o.url} target="_blank" rel="noreferrer">
+            <a className="chip" href={o.url} target="_blank" rel="noreferrer">
               {o.emoji} {o.name}
+              {o.local && <span className="dg-tag">ibagué</span>}
             </a>
-            {o.local && <span className="dg-tag">ibagué</span>}
           </li>
         ))}
       </ul>
@@ -131,7 +131,7 @@ export function Archive({ days, current }: { days: DayEntry[]; current?: string 
             <span className="date">{d.date}</span>
             <span className="body">
               <span className="t">{d.dateLabel}</span>
-              {d.summary && <span className="x sans">{d.summary}</span>}
+              {d.summary && <span className="x prose">{d.summary}</span>}
             </span>
             <span className="arrow">{d.date === current ? "leyendo" : "→"}</span>
           </Link>

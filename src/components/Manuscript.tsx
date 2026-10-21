@@ -138,8 +138,8 @@ export default function Manuscript({ pages }: { pages: Page[] }) {
       <figcaption>
         {!(edges.start && edges.end) && (
           <span className="ms-nav">
-            <button type="button" disabled={edges.start} onClick={() => scrollByPage(-1)} aria-label="Página anterior">←</button>
-            <button type="button" disabled={edges.end} onClick={() => scrollByPage(1)} aria-label="Página siguiente">→</button>
+            <button className="chip" type="button" disabled={edges.start} onClick={() => scrollByPage(-1)} aria-label="Página anterior">←</button>
+            <button className="chip" type="button" disabled={edges.end} onClick={() => scrollByPage(1)} aria-label="Página siguiente">→</button>
           </span>
         )}
         Escrito a mano, {pages.length} {pages.length === 1 ? "página" : "páginas"}. Haz clic en una página para ampliarla.

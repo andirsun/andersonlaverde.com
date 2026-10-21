@@ -25,7 +25,7 @@ export default async function BlogPage() {
       <section className="page-head">
         <span className="kind">Blog</span>
         <h1><T en="Writing" es="Lo que pienso" /></h1>
-        <p className="lede sans">
+        <p className="lede prose">
           <T
             en="What I write — technology, the environment and personal stories. New posts live here, older ones on Medium. Mostly in Spanish."
             es="Lo que escribo: tecnología, medio ambiente e historias personales. Lo nuevo vive aquí; lo anterior, en Medium."
@@ -51,7 +51,7 @@ export default async function BlogPage() {
               </span>
               <span className="body">
                 <span className="t">{p.title}</span>
-                {p.excerpt && <span className="x sans">{p.excerpt}</span>}
+                {p.excerpt && <span className="x prose">{p.excerpt}</span>}
                 <span className="m">
                   {p.source === "medium" ? "Medium" : p.handwritten
                     ? <T en="handwritten, with transcript" es="escrito a mano, con transcripción" />

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Fredoka, Nunito } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import CursorGlow from "@/components/CursorGlow";
@@ -23,22 +24,19 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image" },
 };
 
+// Self-hosted at build time; both are variable fonts, so every weight comes from one file.
+const fredoka = Fredoka({ subsets: ["latin"], variable: "--font-fredoka", display: "swap" });
+const nunito = Nunito({ subsets: ["latin"], variable: "--font-nunito", display: "swap" });
+
 const themeScript = `(function(){var t=localStorage.getItem("al-theme")==="light"?"light":"dark";document.documentElement.setAttribute("data-theme",t);})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={`${fredoka.variable} ${nunito.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500&display=swap"
-          rel="stylesheet"
-        />
         <script dangerouslySetInnerHTML={{ __html: themeScript + langScript }} />
       </head>
       <body>
-        <div className="scanlines" />
         <CursorGlow />
         <Header />
         {children}

@@ -24,13 +24,13 @@ export default async function BajaPage({ searchParams }: Props) {
         <h1>Darse de baja</h1>
         {token ? (
           <>
-            <p className="lede sans">
+            <p className="lede prose">
               Confirma y tu correo se elimina de la lista. No volverás a recibir el resumen diario.
             </p>
             <UnsubscribeButton token={token} />
           </>
         ) : (
-          <p className="lede sans">
+          <p className="lede prose">
             Este enlace no es válido. Usa el enlace de baja que viene al final de cualquiera de los
             correos, o escríbeme a hola@andersonlaverde.com.
           </p>

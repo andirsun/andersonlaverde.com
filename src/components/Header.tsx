@@ -28,6 +28,19 @@ function getServerSnapshot(): Theme {
   return "dark";
 }
 
+/** The toggle shows the theme it switches to: a sun at night, a moon by day. */
+const SUN = (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4.5" />
+    <path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4" />
+  </svg>
+);
+const MOON = (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinejoin="round" aria-hidden="true">
+    <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" />
+  </svg>
+);
+
 export default function Header() {
   const path = usePathname();
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
@@ -51,18 +64,23 @@ export default function Header() {
           Anderson Laverde
         </Link>
         <div className="navlinks">
-          <Link href="/cv" aria-current={cur("/cv")}>cv</Link>
-          <Link href="/blog" aria-current={cur("/blog")}>blog</Link>
-          <Link href="/videos" aria-current={cur("/videos")}>videos</Link>
-          <Link href="/noticias" aria-current={cur("/noticias")}>noticias</Link>
-          <Link href="/#contact"><T en="contact" es="contacto" /></Link>
+          <Link href="/cv" aria-current={cur("/cv")}>CV</Link>
+          <Link href="/blog" aria-current={cur("/blog")}>Blog</Link>
+          <Link href="/videos" aria-current={cur("/videos")}>Videos</Link>
+          <Link href="/noticias" aria-current={cur("/noticias")}>Noticias</Link>
+          <Link href="/#contact"><T en="Contact" es="Contacto" /></Link>
         </div>
-        <button id="lang" type="button" onClick={toggleLang}>
-          <T en={<><b>en</b> / es</>} es={<>en / <b>es</b></>} />
-        </button>
-        <button id="theme" type="button" onClick={toggle}>
-          {theme === "dark" ? <T en="light mode" es="modo claro" /> : <T en="dark mode" es="modo oscuro" />}
-        </button>
+        <div className="toggles">
+          <button id="lang" className="chip" type="button" onClick={toggleLang}>
+            <T en={<><b>EN</b> / ES</>} es={<>EN / <b>ES</b></>} />
+          </button>
+          <button id="theme" className="chip chip-icon" type="button" onClick={toggle}>
+            {theme === "dark" ? SUN : MOON}
+            <span className="sr-only">
+              {theme === "dark" ? <T en="Light mode" es="Modo claro" /> : <T en="Dark mode" es="Modo oscuro" />}
+            </span>
+          </button>
+        </div>
       </nav>
     </header>
   );

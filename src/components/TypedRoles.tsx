@@ -5,18 +5,18 @@ import { currentLang, subscribeLang, type Lang } from "@/lib/lang";
 
 const ROLES: Record<Lang, string[]> = {
   en: [
-    "ai advocate @ streamline",
-    "technical lead, growth",
-    "full-stack engineer",
-    "linux desktop since 2019",
-    "casual open source contributor",
+    "AI Advocate at Streamline",
+    "Technical lead, Growth",
+    "Full-stack engineer",
+    "Linux on my desktop since 2019",
+    "Casual open source contributor",
   ],
   es: [
-    "ai advocate @ streamline",
-    "líder técnico, growth",
-    "ingeniero full-stack",
-    "linux de escritorio desde 2019",
-    "contribuidor casual de open source",
+    "AI Advocate en Streamline",
+    "Líder técnico de Growth",
+    "Ingeniero full-stack",
+    "Linux de escritorio desde 2019",
+    "Contribuidor casual de open source",
   ],
 };
 
@@ -47,11 +47,8 @@ export default function TypedRoles() {
 
   return (
     <div className="typeline">
-      <span className="prompt">&gt;</span>
-      <span>
-        {text}
-        <span className="caret">▊</span>
-      </span>
+      {text}
+      <span className="caret" aria-hidden="true">▍</span>
     </div>
   );
 }

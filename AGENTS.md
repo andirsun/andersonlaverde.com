@@ -56,7 +56,7 @@ That was upgraded wholesale. **Files removed in the upgrade:** `tailwind.config.
 ## Structure
 
 ```
-src/app/layout.tsx        shell: fonts, pre-paint theme script, Header, scanlines, CursorGlow
+src/app/layout.tsx        shell: fonts (next/font), pre-paint theme script, Header, CursorGlow
 src/app/page.tsx          home hub — intro + cards to /cv, /blog, /noticias
 src/app/cv/page.tsx       /cv — experience, education, stack (printable)
 src/app/blog/page.tsx     /blog — local posts + Medium feed, newest first
@@ -65,7 +65,7 @@ src/app/blog/rss.xml/     RSS for /blog
 content/posts/            posts written for this site, one .md per post
 src/app/videos/page.tsx   /videos
 src/app/globals.css       design tokens, all component CSS, print styles
-src/components/           Header, CursorGlow, TypedRoles, LisbonClock, PrintButton, T (i18n)
+src/components/           Header, CursorGlow, TypedRoles, LisbonClock, PrintButton, VideoPicker, T (i18n)
 src/data/                 experience.ts, posts.ts, videos.ts
 ```
 
@@ -76,7 +76,8 @@ there, not touching a component. Keep it that way.
 public YouTube RSS feed for channel `UC-GGZODarfLyjEOz3GhgKnw` (@andirsun) and `/videos`
 revalidates hourly, so new uploads appear without a deploy. No API key is involved. The feed
 carries title, id, publish date and thumbnail — but no duration, which is why the page shows
-dates alone. `FALLBACK_VIDEOS` in that file is a committed snapshot used only when the fetch
+dates alone. Videos play on the page: `VideoPicker` embeds the newest one (youtube-nocookie, like
+the /noticias intro) and the list beside it swaps any other into the player. `FALLBACK_VIDEOS` in that file is a committed snapshot used only when the fetch
 fails; without it a failed build would ship an empty page. Parser lives in `src/lib/youtube.ts`
 and is tested in `test/youtube.test.ts`.
 
@@ -117,59 +118,114 @@ card are written to match that — don't reintroduce "dev setups / build-alongs"
 
 ## Design system
 
-Terminal / Linux aesthetic. Deliberate, not decorative — it reflects that Anderson has run
-Linux as his daily desktop since 2019.
+**Arcade, in mint.** The same playful system as Lukitas (Anderson's personal-finance app,
+lukitas.andersonlaverde.com), recolored: a deep near-black green night instead of purple, a
+light minty day instead of lavender, neon mint for actions, lime and cyan where Lukitas uses
+gold and candy. Chunky rounded type, big radii, and surfaces that sit on a solid bottom edge
+and press down when tapped. Lukitas' brand book lives in its repo
+(`docs/design/system/project/`); the values here are copied from it, not imported.
 
 ### Tokens
 
-Defined as CSS custom properties on `:root` and `:root[data-theme="light"]` in `globals.css`,
-and re-exported to Tailwind under `@theme inline` (so `text-accent`, `bg-panel` etc. work).
+Defined as CSS custom properties on `:root` (night, the default) and
+`:root[data-theme="light"]` (day) in `globals.css`, and re-exported to Tailwind under
+`@theme inline` (so `bg-surface`, `text-link`, `text-ink-muted` etc. work). Fonts and radii are
+plain `@theme` values (`font-display`, `rounded-xl`).
 
-| Token | Dark | Light | Use |
+| Token | Night | Day | Use |
 | --- | --- | --- | --- |
-| `--bg` | `#0c0d0c` | `#f4f4ef` | page background |
-| `--panel` | `#121413` | `#fbfbf7` | cards, inputs, hover fills |
-| `--ink` | `#dfe3dd` | `#1b1e1a` | body text |
-| `--dim` | `#7d857b` | `#5f6659` | secondary text |
-| `--line` | `#232724` | `#dcdcd2` | borders, dividers |
-| `--accent` | `#8ec07c` | `#4a7a3d` | primary green — links, CTAs, prompts |
-| `--amber` | `#d8a657` | `#a3701a` | dates, labels, hover on primary |
+| `--bg` | `#07120c` | `#f0fbf4` | page background, the bottom of the screen glow |
+| `--bg-glow` | `#0f3b24` | `#c6f4d8` | top of the screen glow — the page is never a flat fill |
+| `--surface` | `#10241a` | `#ffffff` | featured cards, static boxes (contact, digest, stats) |
+| `--surface-row` | `#0d1d15` | `#ffffff` | cards and rows you can open, chips, secondary buttons |
+| `--surface-sunken` | `#06100a` | `#e0f4e8` | wells: tags, inputs, the segmented control, icon tiles |
+| `--surface-edge` | `#020805` | `#b0dfc3` | the solid bottom edge under pressables |
+| `--stroke` | `#1e3e2d` | `#cfeadb` | 2px borders on cards and rows |
+| `--ink` | `#effff5` | `#0a2918` | body text |
+| `--ink-muted` | `#a5c8b3` | `#3d5f4c` | secondary text |
+| `--heading` | `#5cffad` | `#08703b` | page titles (`h1`); glows at night, flat by day |
+| `--brand` | `#3cff9d` | `#1fd67a` | primary buttons only — a fill, never text |
+| `--brand-glow` / `--brand-edge` | `#8dffc6` / `#0b7a44` | `#6df0ad` / `#0b8a4a` | top highlight and bottom edge of brand buttons |
+| `--on-brand` | `#03160c` | `#03160c` | text on `--brand`: dark ink, never white |
+| `--link` | `#5cffad` | `#08703b` | links, "Read more →", active nav, selected states |
+| `--focus` | `#d9ff4d` | `#08703b` | the focus ring |
+| `--lime` | `#d9ff4d` | `#4a7300` | accent 1: eyebrows, dates, "open to talk", icon tiles |
+| `--cyan` | `#4cf0ff` | `#00727f` | accent 2: Ibagué in /noticias, the blog tile |
+| `--good` / `--near` / `--over` | `#3cff9d` / `#ffc24d` / `#ff7a93` | `#08703b` / `#9a5300` / `#c2194a` | candy status colors: figures, "in progress" badge, form ok / error |
 
-Two accents only. Green leads, amber is for metadata and hover. Do not introduce a third hue.
+**Contrast.** Every text token passes WCAG AA (4.5:1) on every surface in both themes. Night:
+ink 18.4 on bg, ink-muted 8.9 on surface, link 14.9 on bg, lime 14.2 and cyan 11.8 on surface,
+on-brand 14.2 on brand, near 10.1 and over 6.6 on surface. Day: ink 14.7 on bg, ink-muted 7.1
+on surface, link 5.8 on bg, heading 5.1 on bg-glow, lime 5.6 and cyan 5.7 on surface, on-brand
+9.7 on brand, near 5.8 and over 5.9 on surface. The focus ring is 16.7 (night) and 5.8 (day)
+against bg. The neon colors only pass as text at night; by day, anything green that has to be
+read uses `--link`/`--heading`, and `--brand` stays a fill with dark `--on-brand` text. When
+adding a color, check it against `--bg`, `--bg-glow`, `--surface` and `--surface-row` in both
+themes before using it for text.
 
 ### Type
 
-- **JetBrains Mono** — everything structural: headings, nav, labels, dates, buttons.
-- **IBM Plex Sans** — body copy only, via the `.sans` class. Prose in monospace is tiring to
-  read; that is the whole reason the second family exists.
+- **Fredoka** (`--font-display`, `font-display`) — headings, buttons, chips, card titles,
+  figures, links that read as actions ("Read the CV →"). 600–700.
+- **Nunito** (`--font-text`, `font-text`) — everything else, set heavy: 700 for UI text, 800–900
+  for labels and eyebrows, 600 for long reading (`.prose`: transcripts, the digest, ledes).
+  Never below 600.
 
-Loaded from Google Fonts in `layout.tsx`.
+Both are self-hosted through `next/font/google` in `layout.tsx` (variable fonts, one file
+each); `globals.css` reads them from `--font-fredoka` / `--font-nunito`.
+
+Styles, all in `globals.css`: `h1` page title (40–68px, `--heading`), section heading
+`.sec-head h2` (24–32px, sentence case), card title (21px Fredoka 600), button (15px Fredoka 700,
+uppercase, 0.05em), body (15–17px Nunito 700), eyebrow `.eyebrow` / `.kind` (12px Nunito 900,
+uppercase, 0.08em, `--lime`). Numbers that line up use `.num` (tabular figures).
 
 ### Rules
 
-- Borders, not shadows, define structure. 1px `--line`, radius 0–2px. Nothing is pill-shaped.
-- The site is for a general audience. The terminal look is visual only (mono type, colors,
-  borders); **copy never uses command syntax** — no `$` prompts, `./`, `--flags`, `cat`, `ls`,
-  `cd`, `~/` or URL paths as labels. Buttons and headings are plain words: "Write to me",
-  "Save as PDF", "Experience".
-- Section headings are uppercase mono.
-- No emoji. No gradients as decoration (the two decorative layers below are the exception).
-- Placeholders for missing imagery are diagonal-stripe boxes with a monospace filename label.
+- **Depth is a solid bottom edge, not a blur.** `--edge-sm` (3px) for chips, rows and secondary
+  buttons, `--edge-md` (5px) for cards, `--edge-brand` (6px + a soft brand glow) for primary
+  buttons. Pressing moves the element down by its edge and collapses it to 1px.
+- **Every tappable thing presses; nothing static has an edge.** Static boxes (contact, CV jobs,
+  stats, the digest, the subscribe box) get the 2px `--stroke` border and no edge.
+- **Big radii:** `--radius-xl` 24px for cards and buttons, `--radius-lg` 18px for rows,
+  `--radius-md` 14px for inputs and tiles, `--radius-sm` 10px for thumbnails, `--radius-pill` for
+  chips, tags and badges.
+- **Touch targets are at least 44px** (nav links, chips, buttons, the theme and language
+  toggles, the manuscript arrows).
+- **Focus ring:** 3px solid `--focus`, 2px offset, on every focusable thing (`:focus-visible`).
+- **One glow per screen at the top** (`body` background) plus the `h1` glow at night. No other
+  decorative gradients, except the featured card's corner halo and the digest header tint.
+- The site is for a general audience. **Copy never uses command syntax** — no `$` prompts, `./`,
+  `--flags`, `cat`, `ls`, `cd`, `~/` or URL paths as labels. Buttons and headings are plain
+  words: "Write to me", "Save as PDF", "Experience". Sentence case everywhere; buttons, badges
+  and eyebrows are uppercased by CSS, so write them in sentence case in the source.
+- No emoji in the site's own copy. The exceptions are content that isn't Anderson's UI: video
+  titles, and /noticias, which mirrors the daily email.
+- Icons are simple 24px line drawings inline in the component (2.4px stroke, round caps), drawn
+  in an accent color inside a `--surface-sunken` tile. No icon font.
+- **The Lukitas card is the one place in Lukitas' own colors.** `.lukitas` re-points the site
+  tokens to Lukitas' night purple / day lavender inside that card only: its gold → candy
+  wordmark (night), a purple "See Lukitas" button with white text (4.8:1 night, 5.6:1 day), gold
+  (night) or violet `#6a2fe0` (day) eyebrow. The purple glow sits behind the coin, not the text,
+  because by day the violet and amber only pass AA on the plain lavender. It shows Lukitas' own
+  mascot (`public/lukitas.webp`, a still frame from its sprite sheet). Never recolor the mascot
+  or put it over text, and don't spread the purple to the rest of the site.
 
 ## Motion
 
-Five layers, all subtle. The brief was explicitly "feels too static".
+Playful but small. Every press is 80ms (`--press`); hover changes are 200ms.
 
 | Effect | Where | Notes |
 | --- | --- | --- |
-| Typed role line | `TypedRoles.tsx` | cycles 5 roles under the name, blinking caret |
-| Cursor glow | `CursorGlow.tsx` | radial accent halo trailing the pointer, rAF-throttled |
-| CRT scanlines | `.scanlines` in `globals.css` | fixed overlay, 9s vertical drift, 35% opacity |
-| Experience row hover | `.job:hover` | slides right 16px, accent left bar, gradient wash |
-| Card/chip hover | `.card`, `.chips span` | 4px lift + accent shadow; chips invert to green |
+| Press | `.btn`, `.btn-ghost`, `.chip`, `.card`, `.post`, `.vid`, `.ms-page` | moves down onto its edge on `:active` |
+| Card hover | `.card` | lifts 2px, edge grows to 7px, border tints toward brand |
+| Title rise | `h1`, `.typeline` | fades up 14px once on load |
+| Typed role line | `TypedRoles.tsx` | cycles 5 roles under the name, blinking lime caret |
+| Cursor glow | `CursorGlow.tsx` | soft brand halo trailing the pointer, rAF-throttled |
 
-All of it is gated behind `@media (prefers-reduced-motion: reduce)`, which also hides the
-scanlines and glow entirely. Keep any new animation inside that guard.
+All of it sits behind `@media (prefers-reduced-motion: reduce)`, which cuts every animation and
+transition to ~0, hides the cursor glow, turns off smooth scrolling and straightens the tilted
+portrait. The press still happens (it is feedback, not animation) but snaps instead of easing.
+Keep any new animation inside that guard.
 
 ## Theming
 
@@ -177,7 +233,9 @@ scanlines and glow entirely. Keep any new animation inside that guard.
 
 An inline script in `layout.tsx` sets it from `localStorage` **before first paint** — this is
 what prevents a white flash on load. Do not move it into a component or a `useEffect`.
-`Header.tsx` toggles it and writes back to `localStorage` under the key `al-theme`.
+`Header.tsx` toggles it and writes back to `localStorage` under the key `al-theme`. The toggle
+is an icon button — a sun at night, a moon by day, i.e. the theme it switches to — with the
+label kept as screen-reader text.
 
 The header reads the current theme with `useSyncExternalStore` + a `MutationObserver`, not
 `useState` + `useEffect`. The DOM attribute is the source of truth; copying it into state in an
@@ -204,6 +262,9 @@ Copy is in English, written in active voice, first person, understated. No super
 - `overflow: hidden` on any ancestor of `<header>` breaks the sticky nav. Use `overflow-x: clip`.
 - `LisbonClock` renders `--:--` on the server and hydrates to the real time; it carries
   `suppressHydrationWarning` for that reason.
+- Tailwind's utilities are global class names. A component class that matches one picks up its
+  styles too — `.overline` once drew a line over the video date. Check before naming a class
+  after a CSS word (`overline`, `underline`, `truncate`, `hidden`, `grid`, `border`…).
 - Tailwind 4 has no JS config file. Theme changes go in the `@theme inline` block in
   `globals.css`.
 

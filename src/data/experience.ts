@@ -68,7 +68,7 @@ export const JOBS: Job[] = [
     },
     tags: ["Research", "Air quality"],
     resource: {
-      label: { en: "watch the PM2.5 research", es: "ver la investigación de PM2.5" },
+      label: { en: "Watch the PM2.5 research", es: "Ver la investigación de PM2.5" },
       url: "https://youtu.be/qsfOtHIKIMM",
     } },
   { dates: { en: "Jul 2018 — Aug 2019", es: "jul 2018 — ago 2019" }, company: "Self employed",

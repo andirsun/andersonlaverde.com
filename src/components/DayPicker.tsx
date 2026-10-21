@@ -27,8 +27,8 @@ export default function DayPicker({ days, current }: { days: DayEntry[]; current
 
   return (
     <nav className="dg-picker" aria-label="Elegir día" lang="es">
-      <button type="button" disabled={!older} onClick={() => older && go(older.date)}>
-        ← anterior
+      <button className="chip" type="button" disabled={!older} onClick={() => older && go(older.date)}>
+        ← Anterior
       </button>
       <label>
         <span>Ver día</span>
@@ -44,8 +44,8 @@ export default function DayPicker({ days, current }: { days: DayEntry[]; current
           ))}
         </select>
       </label>
-      <button type="button" disabled={!newer} onClick={() => newer && go(newer.date)}>
-        siguiente →
+      <button className="chip" type="button" disabled={!newer} onClick={() => newer && go(newer.date)}>
+        Siguiente →
       </button>
     </nav>
   );
