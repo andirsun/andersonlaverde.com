@@ -67,7 +67,7 @@ scripts/ink-mask.sh       handwritten page photos/exports → transparent ink ma
 .claude/skills/           publish-handwritten-post: the end-to-end procedure for a new post
 src/app/videos/page.tsx   /videos
 src/app/globals.css       design tokens, all component CSS, print styles
-src/components/           Header, CursorGlow, TypedRoles, LisbonClock, PrintButton, VideoPicker, T (i18n)
+src/components/           Header, CursorGlow, TypedRoles, Icons (Plump), PrintButton, VideoPicker, T (i18n)
 src/data/                 experience.ts, posts.ts, videos.ts
 ```
 
@@ -123,17 +123,20 @@ card are written to match that — don't reintroduce "dev setups / build-alongs"
 
 ## Design system
 
-**Arcade, in mint.** The same playful system as Lukitas (Anderson's personal-finance app,
-lukitas.andersonlaverde.com), recolored: a deep near-black green night instead of purple, a
-light minty day instead of lavender, neon mint for actions, lime and cyan where Lukitas uses
-gold and candy. Chunky rounded type, big radii, and surfaces that sit on a solid bottom edge
+**Arcade, in café.** The same playful system as Lukitas (Anderson's personal-finance app,
+lukitas.andersonlaverde.com), recolored. The default palette is **café**: an espresso night with
+backlit beige neon lettering (taken from a café's lit menu board), a latte day, burnt-orange
+buttons, honey and terracotta accents. **Mint** — the original green arcade look — stays as an
+alternative visitors can pick (see Palettes under Theming). Chunky rounded type, big radii, and surfaces that sit on a solid bottom edge
 and press down when tapped. Lukitas' brand book lives in its repo
 (`docs/design/system/project/`); the values here are copied from it, not imported.
 
 ### Tokens
 
-Defined as CSS custom properties on `:root` (night, the default) and
-`:root[data-theme="light"]` (day) in `globals.css`, and re-exported to Tailwind under
+Defined as CSS custom properties on `:root` (café night, the default) and
+`:root[data-theme="light"]` (café day) in `globals.css`; mint overrides them under
+`[data-palette="mint"]`. The table below lists the **mint** values (the token names and their
+uses are the same in café; café's values and ratios are under Palettes). They are re-exported to Tailwind under
 `@theme inline` (so `bg-surface`, `text-link`, `text-ink-muted` etc. work). Fonts and radii are
 plain `@theme` values (`font-display`, `rounded-xl`).
 
@@ -154,7 +157,7 @@ plain `@theme` values (`font-display`, `rounded-xl`).
 | `--on-brand` | `#03160c` | `#03160c` | text on `--brand`: dark ink, never white |
 | `--link` | `#5cffad` | `#08703b` | links, "Read more →", active nav, selected states |
 | `--focus` | `#d9ff4d` | `#08703b` | the focus ring |
-| `--lime` | `#d9ff4d` | `#4a7300` | accent 1: eyebrows, dates, "open to talk", icon tiles |
+| `--lime` | `#d9ff4d` | `#4a7300` | accent 1: eyebrows, dates, icon tiles |
 | `--cyan` | `#4cf0ff` | `#00727f` | accent 2: Ibagué in /noticias, the blog tile |
 | `--good` / `--near` / `--over` | `#3cff9d` / `#ffc24d` / `#ff7a93` | `#08703b` / `#9a5300` / `#c2194a` | candy status colors: figures, "in progress" badge, form ok / error |
 
@@ -205,8 +208,12 @@ uppercase, 0.08em, `--lime`). Numbers that line up use `.num` (tabular figures).
   and eyebrows are uppercased by CSS, so write them in sentence case in the source.
 - No emoji in the site's own copy. The exceptions are content that isn't Anderson's UI: video
   titles, and /noticias, which mirrors the daily email.
-- Icons are simple 24px line drawings inline in the component (2.4px stroke, round caps), drawn
-  in an accent color inside a `--surface-sunken` tile. No icon font.
+- **Icons are Streamline's Plump Line** (free set, CC BY 4.0 — the credit in the home footer
+  must stay). They live in `src/components/Icons.tsx` as components with `stroke="currentColor"`
+  on Plump's 48px grid, so they take the color of where they sit and follow palette and theme;
+  section icons sit in an accent color inside a `--surface-sunken` tile. To add one, pick it from
+  *Plump Line - Free* in Streamline, download the SVG and paste its path data — don't mix in
+  other families or hand-drawn icons. No icon font.
 - **The Lukitas card is the one place in Lukitas' own colors.** `.lukitas` re-points the site
   tokens to Lukitas' night purple / day lavender inside that card only: its gold → candy
   wordmark (night), a purple "See Lukitas" button with white text (4.8:1 night, 5.6:1 day), gold
@@ -242,6 +249,19 @@ what prevents a white flash on load. Do not move it into a component or a `useEf
 is an icon button — a sun at night, a moon by day, i.e. the theme it switches to — with the
 label kept as screen-reader text.
 
+**Palettes.** Independent of night/day, visitors pick the colors with the two-swatch button in
+the header: **café** (the default, no attribute) or **mint** (`data-palette="mint"` on
+`<html>`). The choice is stored under `al-palette` and applied by the same pre-paint script.
+Café lives in `:root` / `:root[data-theme="light"]` (night: espresso board, backlit beige
+lettering; day: latte paper), with burnt-orange `--brand` (`#e8834f`, dark `--on-brand` text)
+for buttons in both. Mint re-points the same tokens in `:root[data-palette="mint"]` and
+`:root[data-palette="mint"][data-theme="light"]`, so no component needs palette-specific code.
+At night café's neon `--heading-glow` also lights `.sec-head h2`. Café passes AA like mint — night: ink 12.3, ink-muted 7.5, link
+9.1, lime (honey) 9.0, cyan (terracotta) 6.6, on-brand 6.8; day: ink 12.0, ink-muted 6.5,
+heading 6.6, link 5.7, lime 5.1, cyan 5.1, near 4.7, over 4.8, on-brand 6.8 (minimum across
+`--bg`, `--bg-glow`, `--surface`, `--surface-row`). A new palette is one more pair of token
+blocks plus a swatch; check every text token against those four surfaces in both modes.
+
 The header reads the current theme with `useSyncExternalStore` + a `MutationObserver`, not
 `useState` + `useEffect`. The DOM attribute is the source of truth; copying it into state in an
 effect renders the wrong button label for a frame on a light-mode visit, and trips
@@ -265,8 +285,6 @@ Copy is in English, written in active voice, first person, understated. No super
 ## Gotchas
 
 - `overflow: hidden` on any ancestor of `<header>` breaks the sticky nav. Use `overflow-x: clip`.
-- `LisbonClock` renders `--:--` on the server and hydrates to the real time; it carries
-  `suppressHydrationWarning` for that reason.
 - Tailwind's utilities are global class names. A component class that matches one picks up its
   styles too — `.overline` once drew a line over the video date. Check before naming a class
   after a CSS word (`overline`, `underline`, `truncate`, `hidden`, `grid`, `border`…).

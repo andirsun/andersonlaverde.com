@@ -9,7 +9,7 @@ export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Videos",
-  description: "Bits of life in Lisbon, filmed around Portugal — the personal channel, mostly in Spanish.",
+  description: "Bits of my life on video — the personal channel, mostly in Spanish.",
 };
 
 const MONTH_YEAR = {
@@ -37,8 +37,8 @@ export default async function VideosPage() {
         <h1><T en="Off the clock" es="Fuera del trabajo" /></h1>
         <p className="lede prose">
           <T
-            en="I film bits of life here in Lisbon. Moving countries, weekends, and whatever the city is up to. Mostly in Spanish."
-            es="Grabo pedazos de mi vida aquí en Lisboa: mudarme de país, fines de semana y lo que esté pasando en la ciudad. Casi todo en español."
+            en="I film bits of my life: moving countries, weekends, and whatever is going on around me. Mostly in Spanish."
+            es="Grabo pedazos de mi vida: mudarme de país, fines de semana y lo que esté pasando a mi alrededor. Casi todo en español."
           />
         </p>
         <div className="actions">

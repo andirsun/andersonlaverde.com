@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     template: "%s — Anderson Laverde",
   },
   description:
-    "Software engineer at Streamline since 2021 — full-stack, Growth technical lead, now AI Advocate. Based in Lisbon.",
+    "Software engineer at Streamline since 2021 — full-stack, Growth technical lead, now AI Advocate.",
   openGraph: {
     type: "website",
     url: "https://andersonlaverde.com",
@@ -29,12 +29,14 @@ const fredoka = Fredoka({ subsets: ["latin"], variable: "--font-fredoka", displa
 const nunito = Nunito({ subsets: ["latin"], variable: "--font-nunito", display: "swap" });
 
 const themeScript = `(function(){var t=localStorage.getItem("al-theme")==="light"?"light":"dark";document.documentElement.setAttribute("data-theme",t);})();`;
+// Color palette the visitor picked (café is the default and has no attribute). Before paint, like the theme.
+const paletteScript = `(function(){try{if(localStorage.getItem("al-palette")==="mint")document.documentElement.setAttribute("data-palette","mint");}catch(e){}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${fredoka.variable} ${nunito.variable}`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript + langScript }} />
+        <script dangerouslySetInnerHTML={{ __html: themeScript + paletteScript + langScript }} />
       </head>
       <body>
         <CursorGlow />
