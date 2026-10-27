@@ -29,8 +29,42 @@
   --radius-xl: 24px;
 }
 
-/* Night (default): deep near-black green, neon mint for actions. Ratios in AGENTS.md. */
+/* Café (default). Night is an espresso board with backlit beige lettering; day is latte
+   paper. Buttons are burnt orange in both. Ratios in AGENTS.md. */
 :root {
+  --bg:#140d08; --bg-glow:#3a2414;
+  --surface:#24180f; --surface-row:#1c130c; --surface-sunken:#0d0805; --surface-edge:#050302;
+  --stroke:#3d2a1c;
+  --ink:#f6ead7; --ink-muted:#cdb79c; --heading:#ffe7c2;
+  --brand:#e8834f; --brand-glow:#ffad80; --brand-edge:#a2481f; --on-brand:#1f1208;
+  --link:#f4c48a; --focus:#ffd27a;
+  --lime:#f0c75e; --cyan:#ec9a7c;
+  --good:#b9dc8c; --near:#f5b75a; --over:#ff917e;
+  --edge-brand: 0 6px 0 var(--brand-edge), 0 10px 28px color-mix(in oklab, var(--brand) 35%, transparent);
+  /* Neon: a tight warm-white core, then an amber halo, like the lit menu board. */
+  --heading-glow: 0 0 3px rgb(255 236 205 / .7), 0 0 14px rgb(255 196 128 / .5), 0 0 38px rgb(233 150 80 / .3);
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --bg:#f8f0e5; --bg-glow:#ecd8bc;
+  --surface:#fffaf3; --surface-row:#fffaf3; --surface-sunken:#efe2cf; --surface-edge:#d8c0a0;
+  --stroke:#e6d4bc;
+  --ink:#2b1a0f; --ink-muted:#5c4434; --heading:#6e3b16;
+  --brand:#e8834f; --brand-glow:#ffad80; --brand-edge:#a2481f; --on-brand:#1f1208;
+  --link:#7a4419; --focus:#7a4419;
+  --lime:#735300; --cyan:#963c24;
+  --good:#3c6a1d; --near:#8c4f00; --over:#b0261d;
+  --edge-brand: 0 6px 0 var(--brand-edge), 0 10px 24px color-mix(in oklab, var(--brand-edge) 25%, transparent);
+  --heading-glow: none;
+  color-scheme: light;
+}
+/* At night the café lettering glows on section headings too, not only the page title. */
+:root:not([data-palette="mint"]):not([data-theme="light"]) .sec-head h2 { color:var(--heading); text-shadow:var(--heading-glow); }
+
+/* Mint, the alternative palette the visitor can pick (data-palette="mint" on <html>, see
+   Header.tsx). Same token names, so every component follows. */
+/* Night: deep near-black green, neon mint for actions. */
+:root[data-palette="mint"] {
   --bg:#07120c; --bg-glow:#0f3b24;
   --surface:#10241a; --surface-row:#0d1d15; --surface-sunken:#06100a; --surface-edge:#020805;
   --stroke:#1e3e2d;
@@ -44,7 +78,7 @@
   color-scheme: dark;
 }
 /* Day: light mint. The neon stays a fill; text that has to read in green uses --link. */
-:root[data-theme="light"] {
+:root[data-palette="mint"][data-theme="light"] {
   --bg:#f0fbf4; --bg-glow:#c6f4d8;
   --surface:#ffffff; --surface-row:#ffffff; --surface-sunken:#e0f4e8; --surface-edge:#b0dfc3;
   --stroke:#cfeadb;
@@ -142,14 +176,19 @@ nav { max-width:1040px; margin:0 auto; padding:10px 24px; display:flex; align-it
 .navlinks a[aria-current="page"] { color:var(--link); }
 .toggles { display:flex; gap:8px; }
 #lang b { color:var(--link); }
+/* Palette picker: two swatches, the active one ringed. Fixed colors on purpose: each shows its own palette. */
+#palette { width:auto; padding:0 12px; }
+.swatches { display:inline-flex; gap:5px; }
+.swatches i { width:14px; height:14px; border-radius:50%; box-shadow:0 0 0 2px var(--surface-row), 0 0 0 2px transparent; transition:box-shadow .2s; }
+.swatches i[data-on] { box-shadow:0 0 0 2px var(--surface-row), 0 0 0 4px var(--ink); }
+.sw-mint { background:#3cff9d; }
+.sw-cafe { background:linear-gradient(135deg, #ffe7c2 0 45%, #6b3d1d 45%); }
 
 main { max-width:1040px; margin:0 auto; padding:0 24px; position:relative; z-index:1; }
 
 .hero { padding:64px 0 72px; display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:48px; align-items:center; }
 .hero-copy { display:flex; flex-direction:column; gap:20px; min-width:0; }
 .meta { align-self:flex-start; display:inline-flex; align-items:center; gap:8px; flex-wrap:wrap; padding:8px 14px; border-radius:var(--radius-pill); background:var(--surface-sunken); border:2px solid var(--stroke); font-size:13px; font-weight:800; color:var(--ink-muted); }
-.meta .dot { width:9px; height:9px; border-radius:50%; background:var(--good); box-shadow:0 0 10px var(--good); }
-.meta .open { color:var(--lime); }
 h1 { font-family:var(--font-display); font-size:clamp(40px,7vw,68px); line-height:1.02; letter-spacing:-.01em; margin:0; font-weight:700; color:var(--heading); text-shadow:var(--heading-glow); text-wrap:balance; animation:rise .6s var(--ease) both; }
 .typeline { font-family:var(--font-display); font-weight:600; font-size:clamp(19px,2.6vw,24px); min-height:1.4em; animation:rise .6s .08s var(--ease) both; }
 .caret { color:var(--lime); margin-left:2px; animation:blink 1.05s step-end infinite; }
@@ -412,7 +451,7 @@ h1 { font-family:var(--font-display); font-size:clamp(40px,7vw,68px); line-heigh
     --ink:#000; --ink-muted:#333; --heading:#000; --link:#000; --lime:#333; --cyan:#333; --good:#000;
     --heading-glow:none;
   }
-  .glow, header, #theme, #lang, .actions, .cards, .typeline { display:none !important; }
+  .glow, header, #theme, #lang, #palette, .actions, .cards, .typeline { display:none !important; }
   body { background:#fff; color:#000; }
   *, *::before, *::after { box-shadow:none !important; text-shadow:none !important; }
   h1 { animation:none; }

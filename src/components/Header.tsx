@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSyncExternalStore } from "react";
+import { MoonIcon, SunIcon } from "@/components/Icons";
 import T from "@/components/T";
 import { currentLang, setLang } from "@/lib/lang";
 
 type Theme = "dark" | "light";
+type Palette = "mint" | "cafe";
 
 /**
  * The pre-paint script in the root layout owns `data-theme` on <html>, so the DOM
@@ -15,7 +17,7 @@ type Theme = "dark" | "light";
  */
 function subscribe(onStoreChange: () => void) {
   const observer = new MutationObserver(onStoreChange);
-  observer.observe(document.documentElement, { attributeFilter: ["data-theme"] });
+  observer.observe(document.documentElement, { attributeFilter: ["data-theme", "data-palette"] });
   return () => observer.disconnect();
 }
 
@@ -28,27 +30,38 @@ function getServerSnapshot(): Theme {
   return "dark";
 }
 
+/** Café is the default palette; mint is opt-in and the only one with an attribute. */
+function getPalette(): Palette {
+  return document.documentElement.getAttribute("data-palette") === "mint" ? "mint" : "cafe";
+}
+
+function getServerPalette(): Palette {
+  return "cafe";
+}
+
 /** The toggle shows the theme it switches to: a sun at night, a moon by day. */
-const SUN = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true">
-    <circle cx="12" cy="12" r="4.5" />
-    <path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4" />
-  </svg>
-);
-const MOON = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinejoin="round" aria-hidden="true">
-    <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" />
-  </svg>
-);
+const SUN = <SunIcon />;
+const MOON = <MoonIcon />;
 
 export default function Header() {
   const path = usePathname();
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const palette = useSyncExternalStore(subscribe, getPalette, getServerPalette);
 
   const toggle = () => {
     const next: Theme = theme === "dark" ? "light" : "dark";
     document.documentElement.setAttribute("data-theme", next);
     localStorage.setItem("al-theme", next);
+  };
+
+  // Same pattern as the theme: write the attribute, the observer re-renders.
+  const togglePalette = () => {
+    const next: Palette = palette === "cafe" ? "mint" : "cafe";
+    if (next === "mint") document.documentElement.setAttribute("data-palette", "mint");
+    else document.documentElement.removeAttribute("data-palette");
+    try {
+      localStorage.setItem("al-palette", next);
+    } catch {}
   };
 
   // Language is read from the DOM at click time; labels switch through CSS (see <T>).
@@ -73,6 +86,17 @@ export default function Header() {
         <div className="toggles">
           <button id="lang" className="chip" type="button" onClick={toggleLang}>
             <T en={<><b>EN</b> / ES</>} es={<>EN / <b>ES</b></>} />
+          </button>
+          <button id="palette" className="chip chip-icon" type="button" onClick={togglePalette}>
+            <span className="swatches" aria-hidden="true">
+              <i data-on={palette === "cafe" || undefined} className="sw-cafe" />
+              <i data-on={palette === "mint" || undefined} className="sw-mint" />
+            </span>
+            <span className="sr-only">
+              {palette === "cafe"
+                ? <T en="Colors: coffee. Switch to mint" es="Colores: café. Cambiar a menta" />
+                : <T en="Colors: mint. Switch to coffee" es="Colores: menta. Cambiar a café" />}
+            </span>
           </button>
           <button id="theme" className="chip chip-icon" type="button" onClick={toggle}>
             {theme === "dark" ? SUN : MOON}

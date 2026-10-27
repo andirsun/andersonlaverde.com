@@ -1,30 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
-import LisbonClock from "@/components/LisbonClock";
+import { NewspaperIcon, PencilIcon, SuitcaseIcon } from "@/components/Icons";
 import T from "@/components/T";
 import TypedRoles from "@/components/TypedRoles";
 import { LINKS } from "@/data/experience";
 
-/** Small line icons for the section tiles, drawn in each section's accent. */
+/** Section tile icons (Streamline Plump), drawn in each section's accent. */
 const ICONS = {
-  cv: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="var(--link)" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true">
-      <rect x="5" y="3" width="14" height="18" rx="3" />
-      <path d="M9 8h6M9 12h6M9 16h3" />
-    </svg>
-  ),
-  blog: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M4 20l4-1 11-11-3-3L5 16z" />
-      <path d="M14 7l3 3" />
-    </svg>
-  ),
-  noticias: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="var(--lime)" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true">
-      <rect x="3" y="5" width="18" height="14" rx="3" />
-      <path d="M7 9h6M7 13h10M7 16h7" />
-    </svg>
-  ),
+  cv: <SuitcaseIcon style={{ color: "var(--link)" }} />,
+  blog: <PencilIcon style={{ color: "var(--cyan)" }} />,
+  noticias: <NewspaperIcon style={{ color: "var(--lime)" }} />,
 };
 
 /** Home is a hub: who I am, then pick a section. The CV lives at /cv. */
@@ -69,14 +54,6 @@ export default function Home() {
     <main id="top">
       <section className="hero">
         <div className="hero-copy">
-          <div className="meta">
-            <span className="dot" aria-hidden="true" />
-            <span><T en="Lisbon, Portugal" es="Lisboa, Portugal" /></span>
-            <span aria-hidden="true">·</span>
-            <LisbonClock />
-            <span aria-hidden="true">·</span>
-            <span className="open"><T en="open to talk" es="abierto a conversar" /></span>
-          </div>
           <h1>Anderson Laverde</h1>
           <TypedRoles />
           <p className="lede prose">
@@ -144,11 +121,11 @@ export default function Home() {
 
       <section id="contact" className="contact">
         <div className="contact-box">
-          <h2><T en="Let's make something great." es="Hagamos algo grande." /></h2>
+          <h2><T en="Contact me" es="Contáctame" /></h2>
           <p className="prose">
             <T
-              en="Remote-friendly, timezone Lisbon. Happy to talk about AI in real products, growth engineering, open source or a good mechanical keyboard."
-              es="Trabajo en remoto, en horario de Lisboa. Encantado de hablar de IA en productos reales, growth engineering, open source o un buen teclado mecánico."
+              en="I work remotely. Happy to talk about AI in real products, growth engineering, open source or a good mechanical keyboard."
+              es="Trabajo en remoto. Encantado de hablar de IA en productos reales, growth engineering, open source o un buen teclado mecánico."
             />
           </p>
           <div className="links">
@@ -156,7 +133,10 @@ export default function Home() {
           </div>
         </div>
         <p className="fine">
-          © {new Date().getFullYear()} Anderson Laverde — <T en="built from Lisbon" es="hecho desde Lisboa" />
+          © {new Date().getFullYear()} Anderson Laverde ·{" "}
+          <T en="Icons" es="Íconos" />:{" "}
+          <a href="https://www.streamlinehq.com/icons/plump-line-free" target="_blank" rel="noreferrer">Plump by Streamline</a>,{" "}
+          <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">CC BY 4.0</a>
         </p>
       </section>
     </main>
