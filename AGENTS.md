@@ -123,12 +123,12 @@ card are written to match that — don't reintroduce "dev setups / build-alongs"
 
 ## Design system
 
-**Arcade, in café.** The same playful system as Lukitas (Anderson's personal-finance app,
-lukitas.andersonlaverde.com), recolored. The default palette is **café**: an espresso night with
+**Arcade, in café.** The same playful system as Wambito (Anderson's personal-finance app, formerly Lukitas,
+wambito.com), recolored. The default palette is **café**: an espresso night with
 backlit beige neon lettering (taken from a café's lit menu board), a latte day, burnt-orange
 buttons, honey and terracotta accents. **Mint** — the original green arcade look — stays as an
 alternative visitors can pick (see Palettes under Theming). Chunky rounded type, big radii, and surfaces that sit on a solid bottom edge
-and press down when tapped. Lukitas' brand book lives in its repo
+and press down when tapped. Wambito's brand book lives in its repo
 (`docs/design/system/project/`); the values here are copied from it, not imported.
 
 ### Tokens
@@ -214,12 +214,12 @@ uppercase, 0.08em, `--lime`). Numbers that line up use `.num` (tabular figures).
   section icons sit in an accent color inside a `--surface-sunken` tile. To add one, pick it from
   *Plump Line - Free* in Streamline, download the SVG and paste its path data — don't mix in
   other families or hand-drawn icons. No icon font.
-- **The Lukitas card is the one place in Lukitas' own colors.** `.lukitas` re-points the site
-  tokens to Lukitas' night purple / day lavender inside that card only: its gold → candy
-  wordmark (night), a purple "See Lukitas" button with white text (4.8:1 night, 5.6:1 day), gold
+- **The Wambito card is the one place in Wambito's own colors.** `.wambito` re-points the site
+  tokens to Wambito's night purple / day lavender inside that card only: its gold → candy
+  wordmark (night), a purple "See Wambito" button with white text (4.8:1 night, 5.6:1 day), gold
   (night) or violet `#6a2fe0` (day) eyebrow. The purple glow sits behind the coin, not the text,
-  because by day the violet and amber only pass AA on the plain lavender. It shows Lukitas' own
-  mascot (`public/lukitas.webp`, a still frame from its sprite sheet). Never recolor the mascot
+  because by day the violet and amber only pass AA on the plain lavender. It shows Wambito's own
+  mascot (`public/wambito.webp`, a still frame from its sprite sheet). Never recolor the mascot
   or put it over text, and don't spread the purple to the rest of the site.
 
 ## Motion

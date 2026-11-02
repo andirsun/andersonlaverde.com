@@ -225,27 +225,27 @@ h1 { font-family:var(--font-display); font-size:clamp(40px,7vw,68px); line-heigh
 .feature .text { max-width:52ch; font-size:16px; }
 .feature img { width:min(230px,100%); height:auto; justify-self:center; position:relative; z-index:1; filter:drop-shadow(0 18px 18px rgba(0,0,0,.32)); }
 
-/* Lukitas' card wears Lukitas' own palette (its night purple / day lavender, copied from its
+/* Wambito's card wears Wambito's own palette (its night purple / day lavender, copied from its
    tokens.json) by re-pointing the site tokens inside the card. The glow sits behind the coin,
    away from the text: by day the purple and amber only pass AA on the plain lavender. */
-.lukitas {
-  --lk-bg:#15122b; --lk-glow:#3a1f6e; --lk-brand:#7c4dff; --lk-brand-edge:#3f22a3; --lk-brand-shadow:rgba(139,92,255,.45);
-  --lk-gold:#ffe66d; --lk-candy:#ff8fd8;
-  --brand:var(--lk-brand); --surface-edge:#0f0c22; --stroke:#2d2660; --ink:#f3f0ff; --ink-muted:#b9b2e0;
-  --lime:var(--lk-gold); --near:#ffb547; --focus:var(--lk-gold);
+.wambito {
+  --wb-bg:#15122b; --wb-glow:#3a1f6e; --wb-brand:#7c4dff; --wb-brand-edge:#3f22a3; --wb-brand-shadow:rgba(139,92,255,.45);
+  --wb-gold:#ffe66d; --wb-candy:#ff8fd8;
+  --brand:var(--wb-brand); --surface-edge:#0f0c22; --stroke:#2d2660; --ink:#f3f0ff; --ink-muted:#b9b2e0;
+  --lime:var(--wb-gold); --near:#ffb547; --focus:var(--wb-gold);
   /* the edge shorthands resolve where they're declared, so re-declare them on the new edge color */
   --edge-sm:0 3px 0 var(--surface-edge); --edge-md:0 5px 0 var(--surface-edge);
-  background-color:var(--lk-bg);
-  background-image:radial-gradient(55% 95% at 82% 45%, var(--lk-glow) 0%, transparent 75%);
+  background-color:var(--wb-bg);
+  background-image:radial-gradient(55% 95% at 82% 45%, var(--wb-glow) 0%, transparent 75%);
 }
-:root[data-theme="light"] .lukitas {
-  --lk-bg:#f7f4ff; --lk-glow:#e9ddff; --lk-brand:#7b3df0; --lk-brand-edge:#4a2bbf; --lk-brand-shadow:rgba(123,61,240,.28);
+:root[data-theme="light"] .wambito {
+  --wb-bg:#f7f4ff; --wb-glow:#e9ddff; --wb-brand:#7b3df0; --wb-brand-edge:#4a2bbf; --wb-brand-shadow:rgba(123,61,240,.28);
   --surface-edge:#d6ccf5; --stroke:#e6defc; --ink:#221a47; --ink-muted:#5b5285;
   --lime:#6a2fe0; --near:#a85a00; --focus:#6a2fe0;
 }
-.lukitas .wordmark { background:linear-gradient(90deg, var(--lk-gold), var(--lk-candy)); -webkit-background-clip:text; background-clip:text; color:transparent; }
-:root[data-theme="light"] .lukitas .wordmark { background:none; color:var(--ink); }
-.lukitas .go { align-self:flex-start; display:inline-flex; align-items:center; min-height:44px; padding:0 20px; margin-top:8px; border-radius:var(--radius-lg); background:var(--lk-brand); color:#fff; font-weight:700; font-size:14px; letter-spacing:.05em; text-transform:uppercase; box-shadow:0 5px 0 var(--lk-brand-edge), 0 10px 24px var(--lk-brand-shadow); }
+.wambito .wordmark { background:linear-gradient(90deg, var(--wb-gold), var(--wb-candy)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+:root[data-theme="light"] .wambito .wordmark { background:none; color:var(--ink); }
+.wambito .go { align-self:flex-start; display:inline-flex; align-items:center; min-height:44px; padding:0 20px; margin-top:8px; border-radius:var(--radius-lg); background:var(--wb-brand); color:#fff; font-weight:700; font-size:14px; letter-spacing:.05em; text-transform:uppercase; box-shadow:0 5px 0 var(--wb-brand-edge), 0 10px 24px var(--wb-brand-shadow); }
 .badge { font-family:var(--font-text); font-size:11px; font-weight:900; letter-spacing:.06em; text-transform:uppercase; color:var(--near); border:2px solid var(--near); border-radius:var(--radius-pill); padding:3px 10px; }
 
 .contact { padding:8px 0 72px; }
@@ -432,7 +432,7 @@ h1 { font-family:var(--font-display); font-size:clamp(40px,7vw,68px); line-heigh
   .portrait { transform:none; max-width:420px; }
   .feature { padding:24px; }
   .feature img { width:160px; grid-row:1; }
-  .lukitas { background-image:radial-gradient(80% 38% at 50% 14%, var(--lk-glow) 0%, transparent 75%); }
+  .wambito { background-image:radial-gradient(80% 38% at 50% 14%, var(--wb-glow) 0%, transparent 75%); }
   .feature .title { font-size:34px; }
   .contact-box, .sub { padding:24px; }
   .dg-head, .dg-section, .dg-divider, .dg-note { padding-left:18px; padding-right:18px; }
