@@ -85,19 +85,19 @@ export default function Home() {
           <span className="right"><T en="in progress" es="en curso" /></span>
         </div>
         <div className="cards">
-          <a className="card feature lukitas" href="https://lukitas.andersonlaverde.com" target="_blank" rel="noopener">
+          <a className="card feature wambito" href="https://wambito.com" target="_blank" rel="noopener">
             <span className="feature-copy">
               <span className="kind"><T en="What I’m building now" es="Lo que estoy construyendo" /></span>
-              <span className="title"><span className="wordmark">Lukitas</span> <span className="badge"><T en="In progress" es="En curso" /></span></span>
+              <span className="title"><span className="wordmark">Wambito</span> <span className="badge"><T en="In progress" es="En curso" /></span></span>
               <span className="text prose">
                 <T
                   en="A free, open-source personal finance app: your budget, and you’ll actually enjoy looking after it. Log an expense in seconds and see where your money goes. Web first, then Android and iPhone."
                   es="Una app de finanzas personales gratis y de código abierto: tu presupuesto, y te va a dar gusto cuidarlo. Anota un gasto en segundos y mira en qué se va tu plata. Primero la web, luego Android e iPhone."
                 />
               </span>
-              <span className="go"><T en="See Lukitas →" es="Ver Lukitas →" /></span>
+              <span className="go"><T en="See Wambito →" es="Ver Wambito →" /></span>
             </span>
-            <Image src="/lukitas.webp" alt="Lukitas, a gold coin with a smiling face" width={440} height={440} sizes="230px" />
+            <Image src="/wambito.webp" alt="Wambito, a gold coin with a smiling face" width={440} height={440} sizes="230px" />
           </a>
         </div>
       </section>
