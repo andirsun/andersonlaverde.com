@@ -28,7 +28,7 @@ Anderson reviews every change on its Vercel preview before it reaches production
 
 | | |
 | --- | --- |
-| Framework | Next.js 16.3.5, App Router |
+| Framework | Next.js 16.4.1, App Router |
 | React | 19 |
 | Styling | Tailwind CSS 4.3.3 + semantic CSS in `globals.css` |
 | Language | TypeScript 5.9, strict |

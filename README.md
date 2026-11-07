@@ -1,7 +1,7 @@
 # andersonlaverde.com
 
 Personal site — CV (home), blog and videos.
-Next.js 16.3.5 (App Router) · React 19 · Tailwind CSS 4.3.3 · TypeScript.
+Next.js 16.4.1 (App Router) · React 19 · Tailwind CSS 4.3.3 · TypeScript.
 
 ## Run
 
