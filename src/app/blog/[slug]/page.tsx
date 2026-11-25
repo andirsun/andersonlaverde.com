@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Manuscript from "@/components/Manuscript";
 import PostViews from "@/components/PostViews";
-import { getLocalPost, getLocalPosts, getPages } from "@/data/localPosts";
+import { getImage, getLocalPost, getLocalPosts, getPages } from "@/data/localPosts";
 
 /** Posts live in the repo, so every one is known at build time. */
 export const dynamicParams = false;
@@ -36,9 +37,26 @@ export default async function PostPage({ params }: Props) {
   const pages = getPages(post);
   const transcript = (
     <article className="transcript prose">
-      {post.paragraphs.map((p, i) => (
-        <p key={i}>{p}</p>
-      ))}
+      {post.paragraphs.map((p, i) => {
+        if (p.image) {
+          const img = getImage(post, p.image);
+          return (
+            <figure key={i} className="shot">
+              <Image className={img.light && "night"} src={img.src} width={img.width} height={img.height} alt={p.text} />
+              {img.light && (
+                <Image className="day" src={img.light.src} width={img.light.width} height={img.light.height} alt={p.text} />
+              )}
+            </figure>
+          );
+        }
+        return p.quote ? (
+          <blockquote key={i} className="note">
+            <p>{p.text}</p>
+          </blockquote>
+        ) : (
+          <p key={i}>{p.text}</p>
+        );
+      })}
     </article>
   );
 
