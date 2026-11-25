@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, test } from "vitest";
-import { getLocalPost, getLocalPosts, getPages } from "@/data/localPosts";
+import { getImage, getLocalPost, getLocalPosts, getPages } from "@/data/localPosts";
 import { buildRss, parsePostFile, pngSize } from "@/lib/localPosts";
 
 const FILE = `---
@@ -23,9 +23,28 @@ describe("parsePostFile", () => {
       title: "Un título",
       date: "2026-10-16",
       excerpt: "Resumen corto.",
-      paragraphs: ["Primer párrafo en dos líneas.", "Segundo párrafo."],
+      paragraphs: [
+        { text: "Primer párrafo en dos líneas.", quote: false },
+        { text: "Segundo párrafo.", quote: false },
+      ],
       pages: 1,
     });
+  });
+
+  test("reads a paragraph whose lines all start with > as a quote", () => {
+    const body = "> Una nota\n> en dos líneas.\n\nTexto > con flecha.\n";
+    expect(parsePostFile("ok", FILE.replace(/---\n\n[\s\S]*$/, `---\n\n${body}`))?.paragraphs).toEqual([
+      { text: "Una nota en dos líneas.", quote: true },
+      { text: "Texto > con flecha.", quote: false },
+    ]);
+  });
+
+  test("reads an ![alt](file.png) paragraph as an image in the post's folder", () => {
+    const body = "![Una captura](captura-1.png)\n\n![Fuera](../../x.png)\n";
+    expect(parsePostFile("ok", FILE.replace(/---\n\n[\s\S]*$/, `---\n\n${body}`))?.paragraphs).toEqual([
+      { text: "Una captura", quote: false, image: "captura-1.png" },
+      { text: "![Fuera](../../x.png)", quote: false },
+    ]);
   });
 
   test("accepts CRLF line endings", () => {
@@ -68,6 +87,7 @@ describe("content/posts", () => {
     expect(posts.length).toBeGreaterThan(0);
     for (const post of posts) {
       expect(getPages(post)).toHaveLength(post.pages);
+      for (const p of post.paragraphs) if (p.image) expect(getImage(post, p.image).width).toBeGreaterThan(0);
     }
   });
 

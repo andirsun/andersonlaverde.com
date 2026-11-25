@@ -85,7 +85,10 @@ and is tested in `test/youtube.test.ts`.
 
 **Blog posts hosted here** live in `content/posts/<slug>.md`: frontmatter (`title`, `date`
 YYYY-MM-DD, `excerpt`, `pages`) then plain paragraphs separated by blank lines. No Markdown or
-HTML is rendered. `pages: N` means there are handwritten pages at `public/blog/<slug>/01.png` …
+HTML is rendered, with two exceptions: a paragraph whose lines all start with `>` is a quote
+(set apart like a quoted message in Slack, a bar on the left), and a paragraph that is exactly
+`![alt](file.png)` is an image from `public/blog/<slug>/` (a plain file name, PNG only; a
+`<name>-light.png` next to it is shown by day instead). `pages: N` means there are handwritten pages at `public/blog/<slug>/01.png` …
 The post page shows the transcript by default and the pages in a second tab. The pages are
 **transparent PNG masks**, not photos: the page renders them as `mask-image` painted in
 `--ink`, so the handwriting follows the theme. Convert pages with

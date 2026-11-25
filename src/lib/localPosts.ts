@@ -2,17 +2,25 @@
  * A post written for this site rather than Medium. The source is a Markdown-ish file in
  * `content/posts/<slug>.md`: a `---` frontmatter block of `key: value` lines, then the
  * body as plain paragraphs separated by blank lines. No Markdown or HTML is rendered —
- * the body is a transcript, so paragraphs of text are all it needs.
+ * the body is a transcript, so paragraphs of text are all it needs. The one exception: a
+ * paragraph whose lines all start with `>` is a quote, set apart like a quoted message in
+ * Slack (e.g. a note introducing text first written somewhere else). And a paragraph that is
+ * exactly `![alt](file.png)` is an image: a PNG in `public/blog/<slug>/`, with `alt` as `text`.
  *
  * `pages` counts the handwritten pages in `public/blog/<slug>/01.png`, `02.png`, …
  */
+export type Paragraph = { text: string; quote: boolean; image?: string };
+
+/** A plain file name only, so an image can't point outside the post's own folder. */
+const IMAGE = /^!\[([^\]]*)\]\(([a-z0-9][a-z0-9-]*\.png)\)$/;
+
 export type LocalPost = {
   slug: string;
   title: string;
   /** YYYY-MM-DD */
   date: string;
   excerpt: string;
-  paragraphs: string[];
+  paragraphs: Paragraph[];
   pages: number;
 };
 
@@ -32,10 +40,17 @@ export function parsePostFile(slug: string, source: string): LocalPost | null {
     if (kv) meta[kv[1]] = kv[2].trim();
   }
 
-  const paragraphs = m[2]
+  const paragraphs: Paragraph[] = m[2]
     .split(/\n\s*\n/)
-    .map((p) => p.replace(/\s+/g, " ").trim())
-    .filter(Boolean);
+    .map((block) => {
+      const lines = block.split("\n").map((l) => l.trim()).filter(Boolean);
+      const img = lines.length === 1 ? lines[0].match(IMAGE) : null;
+      if (img) return { text: img[1].trim(), quote: false, image: img[2] };
+      const quote = lines.length > 0 && lines.every((l) => l.startsWith(">"));
+      const text = (quote ? lines.map((l) => l.replace(/^>\s?/, "")) : lines).join(" ").replace(/\s+/g, " ").trim();
+      return { text, quote };
+    })
+    .filter((p) => p.text);
   const pages = Number(meta.pages ?? 0);
 
   if (!meta.title || !DATE.test(meta.date ?? "") || paragraphs.length === 0) return null;
